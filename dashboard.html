@@ -12,31 +12,27 @@
 </head>
 <body class="text-gray-800">
 
-    <!-- شاشة تسجيل الدخول -->
     <div id="loginSection" class="min-h-screen flex items-center justify-center">
         <div class="bg-white p-8 rounded-2xl shadow-xl w-96 text-center border-t-4 border-emerald-500">
             <h2 class="text-3xl font-extrabold mb-6 text-gray-800">بوابة <span class="text-emerald-600">أفق</span></h2>
-            <p class="text-sm text-gray-500 mb-4">المحرك الذكي لإدارة الشبكة</p>
             <input type="password" id="passwordInput" class="w-full p-3 border rounded-lg mb-4 text-center focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="كلمة المرور">
             <button onclick="checkPassword()" class="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-700 transition font-bold shadow-lg">تسجيل الدخول</button>
             <p id="errorMsg" class="text-red-500 mt-3 text-sm hidden font-bold">كلمة المرور غير صحيحة، حاول مجدداً.</p>
         </div>
     </div>
 
-    <!-- لوحة التحكم الذكية -->
     <div id="dashboardSection" class="hidden container mx-auto p-4 md:p-8 max-w-6xl">
         <div class="flex flex-col md:flex-row justify-between items-center mb-8 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
             <div>
                 <h1 class="text-2xl font-bold text-gray-800">إدارة مشاريع أفق</h1>
-                <p class="text-gray-500 text-sm mt-1">أضف مشاريعك هنا، وقم بتحميل الملف لتحديث الشبكة بالكامل.</p>
             </div>
             <button onclick="downloadJSON()" class="mt-4 md:mt-0 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition font-bold flex items-center gap-2">
-                <span>⬇️</span> تحميل projects.json الجديد
+                <span>⬇️</span> تحميل projects.json
             </button>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- نموذج إضافة مشروع -->
+            <!-- النموذج -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-fit">
                 <h2 class="text-lg font-bold mb-4 text-emerald-700 border-b pb-2">➕ إضافة تطبيق جديد</h2>
                 <form id="projectForm" onsubmit="addProject(event)">
@@ -48,28 +44,39 @@
                         <label class="block text-sm font-semibold text-gray-700 mb-1">وصف قصير</label>
                         <textarea id="pDesc" required rows="3" class="w-full p-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">حالة التطبيق</label>
-                        <select id="pStatus" class="w-full p-2 border rounded-lg bg-gray-50 focus:outline-none">
-                            <option value="متوفر الآن">متوفر الآن</option>
-                            <option value="قريباً">قريباً</option>
-                            <option value="نسخة تجريبية">نسخة تجريبية</option>
-                        </select>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">اسم الأيقونة</label>
+                            <input type="text" id="pImage" placeholder="مثال: app.png" class="w-full p-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-emerald-500 text-left focus:outline-none" dir="ltr">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">الحالة</label>
+                            <select id="pStatus" class="w-full p-2 border rounded-lg bg-gray-50 focus:outline-none">
+                                <option value="متوفر الآن">متوفر الآن</option>
+                                <option value="قريباً">قريباً</option>
+                                <option value="نسخة تجريبية">نسخة تجريبية</option>
+                            </select>
+                        </div>
                     </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">الكلمات المفتاحية (افصل بينها بفاصلة)</label>
+                        <input type="text" id="pTags" placeholder="Windows, مجاني, مفتوح المصدر" class="w-full p-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+
                     <div class="mb-6">
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">رابط التحميل (إن وجد)</label>
-                        <input type="url" id="pLink" placeholder="https://..." class="w-full p-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-left" dir="ltr">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">رابط التحميل</label>
+                        <input type="url" id="pLink" placeholder="https://..." class="w-full p-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-emerald-500 text-left focus:outline-none" dir="ltr">
                     </div>
                     <button type="submit" class="w-full bg-emerald-600 text-white py-2 rounded-lg shadow hover:bg-emerald-700 transition font-bold">حفظ التطبيق</button>
                 </form>
             </div>
 
-            <!-- قائمة المشاريع الحالية -->
+            <!-- القائمة -->
             <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h2 class="text-lg font-bold mb-4 text-emerald-700 border-b pb-2">📂 قاعدة بيانات تطبيقاتك</h2>
-                <div id="projectsList" class="space-y-3">
-                    <!-- سيتم حقن المشاريع هنا برمجياً -->
-                </div>
+                <h2 class="text-lg font-bold mb-4 text-emerald-700 border-b pb-2">📂 تطبيقاتك</h2>
+                <div id="projectsList" class="space-y-3"></div>
             </div>
         </div>
     </div>
@@ -77,10 +84,8 @@
     <script>
         let dataStore = { projects: [] };
 
-        // 1. التحقق من كلمة المرور (كلمة المرور: sadeed)
         function checkPassword() {
-            const pass = document.getElementById('passwordInput').value;
-            if(pass === 'sadeed') {
+            if(document.getElementById('passwordInput').value === 'sadeed') {
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('dashboardSection').classList.remove('hidden');
                 fetchExistingData();
@@ -89,84 +94,79 @@
             }
         }
 
-        // 2. جلب الملف الحالي
         async function fetchExistingData() {
             try {
-                // يحاول قراءة الملف الموجود لتعديله
-                const response = await fetch('projects.json');
-                if(response.ok) {
-                    dataStore = await response.json();
-                }
-            } catch (error) {
-                console.log('لم يتم العثور على ملف مسبق، سنبدأ بقائمة فارغة.');
-            }
+                const response = await fetch('projects.json?t=' + new Date().getTime());
+                if(response.ok) { dataStore = await response.json(); }
+            } catch (error) { console.log('ملف جديد.'); }
             renderList();
         }
 
-        // 3. رسم واجهة المشاريع
         function renderList() {
             const list = document.getElementById('projectsList');
             list.innerHTML = '';
             
             if(dataStore.projects.length === 0) {
-                list.innerHTML = '<p class="text-gray-400 text-center py-8">لا توجد تطبيقات مضافة بعد.</p>';
+                list.innerHTML = '<p class="text-gray-400 text-center py-8">لا توجد تطبيقات مضافة.</p>';
                 return;
             }
 
             dataStore.projects.forEach((proj, index) => {
-                let statusColor = proj.status === 'قريباً' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-800';
-                
+                let tagsHtml = proj.tags ? proj.tags.map(tag => `<span class="bg-gray-200 text-gray-700 text-[10px] px-1.5 py-0.5 rounded mr-1">${tag}</span>`).join('') : '';
+                let imgSrc = proj.image ? `Photos/${proj.image}` : 'https://via.placeholder.com/40';
+
                 list.innerHTML += `
                     <div class="flex justify-between items-center p-4 border rounded-xl hover:shadow-md transition bg-gray-50">
-                        <div class="pl-4">
-                            <h3 class="font-bold text-gray-800 text-lg mb-1">
-                                ${proj.title} 
-                                <span class="text-xs ${statusColor} px-2 py-1 rounded-full mr-2 font-normal">${proj.status}</span>
-                            </h3>
-                            <p class="text-sm text-gray-600 line-clamp-2">${proj.description}</p>
-                            ${proj.link ? `<a href="${proj.link}" target="_blank" class="text-xs text-blue-500 hover:underline mt-2 inline-block">🔗 رابط التطبيق</a>` : ''}
+                        <div class="flex items-center gap-4 w-full">
+                            <img src="${imgSrc}" onerror="this.src='https://via.placeholder.com/40'" class="w-12 h-12 rounded-lg object-cover border border-gray-200 flex-shrink-0">
+                            <div class="flex-grow">
+                                <h3 class="font-bold text-gray-800 mb-1">${proj.title} <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full mr-2">${proj.status}</span></h3>
+                                <p class="text-xs text-gray-500 line-clamp-1 mb-1">${proj.description}</p>
+                                <div>${tagsHtml}</div>
+                            </div>
+                            <button onclick="deleteProject(${index})" class="text-red-500 hover:bg-red-100 px-3 py-2 rounded-lg transition text-sm font-bold flex-shrink-0">حذف</button>
                         </div>
-                        <button onclick="deleteProject(${index})" class="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-2 rounded-lg transition text-sm font-bold flex-shrink-0">
-                            حذف
-                        </button>
                     </div>
                 `;
             });
         }
 
-        // 4. إضافة مشروع جديد
         function addProject(e) {
             e.preventDefault();
+            
+            // معالجة الكلمات المفتاحية
+            const rawTags = document.getElementById('pTags').value;
+            const tagsArray = rawTags.split(',').map(tag => tag.trim()).filter(tag => tag !== "");
+
             const newProject = {
                 title: document.getElementById('pTitle').value,
                 description: document.getElementById('pDesc').value,
                 status: document.getElementById('pStatus').value,
-                link: document.getElementById('pLink').value
+                link: document.getElementById('pLink').value,
+                image: document.getElementById('pImage').value,
+                tags: tagsArray
             };
             
-            // إضافة في بداية القائمة ليظهر كأول عنصر
             dataStore.projects.unshift(newProject);
             renderList();
             document.getElementById('projectForm').reset();
         }
 
-        // 5. حذف مشروع
         function deleteProject(index) {
-            if(confirm('هل أنت متأكد من حذف هذا التطبيق؟')) {
+            if(confirm('هل أنت متأكد من الحذف؟')) {
                 dataStore.projects.splice(index, 1);
                 renderList();
             }
         }
 
-        // 6. تحميل الملف الجديد
         function downloadJSON() {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataStore, null, 4));
-            const downloadAnchorNode = document.createElement('a');
-            downloadAnchorNode.setAttribute("href", dataStr);
-            downloadAnchorNode.setAttribute("download", "projects.json");
-            document.body.appendChild(downloadAnchorNode);
-            downloadAnchorNode.click();
-            downloadAnchorNode.remove();
+            const node = document.createElement('a');
+            node.setAttribute("href", dataStr);
+            node.setAttribute("download", "projects.json");
+            document.body.appendChild(node);
+            node.click();
+            node.remove();
         }
     </script>
 </body>

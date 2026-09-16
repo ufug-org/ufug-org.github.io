@@ -4,155 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أفق | منصة المشاريع الإسلامية الريادية</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Cairo', 'sans-serif'] },
-                    colors: { primary: '#0ea5e9', secondary: '#10b981', dark: '#0f172a' }
-                }
-            }
-        }
-    </script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; }
-        .gradient-text {
-            background: linear-gradient(to left, #0ea5e9, #10b981);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-        }
-        .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; transform: translateY(20px); }
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-        .delay-100 { animation-delay: 100ms; }
-        .delay-200 { animation-delay: 200ms; }
-        
-        #supportModal { transition: opacity 0.3s ease-in-out; }
-        .modal-content { transition: transform 0.3s ease-in-out; transform: scale(0.95); }
-        #supportModal.active .modal-content { transform: scale(1); }
+        .modal-active { overflow: hidden; }
     </style>
 </head>
-<body class="text-slate-800 antialiased min-h-screen flex flex-col relative overflow-x-hidden">
+<body class="text-gray-800 antialiased selection:bg-emerald-200">
 
-    <div class="absolute top-0 right-0 -z-10 w-full h-full overflow-hidden pointer-events-none opacity-40">
-        <div class="absolute -top-[20%] -right-[10%] w-[70%] h-[70%] rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 blur-3xl"></div>
-        <div class="absolute bottom-[10%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-tr from-secondary/20 to-primary/20 blur-3xl"></div>
-    </div>
-
-    <header class="w-full px-6 py-6 md:px-12 flex justify-between items-center bg-white/50 backdrop-blur-md fixed top-0 z-40 border-b border-slate-200/50">
-        <div class="flex items-center gap-2">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-xl shadow-lg">أ</div>
-            <h1 class="text-2xl font-bold tracking-tight text-dark">أفق</h1>
-        </div>
-        <a href="#support-section" class="hidden md:flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-primary transition-colors">
-            كيف أدعم المنصة؟
-        </a>
-    </header>
-
-    <main class="flex-grow flex flex-col items-center justify-center pt-32 pb-20 px-4 text-center mt-10">
-        <span class="fade-in-up inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-sm font-bold mb-6 border border-primary/20">
-            ✨ الانطلاقة قريباً
-        </span>
-        <h2 class="fade-in-up delay-100 text-5xl md:text-7xl font-extrabold mb-6 text-dark leading-tight">
-            منصة <span class="gradient-text">أفق</span>
-        </h2>
-        <p class="fade-in-up delay-200 text-xl md:text-2xl text-slate-600 max-w-2xl mb-12 font-medium leading-relaxed">
-            منصة ريادية تهدف لدعم المشاريع الإسلامية المبتكرة، وتمكين المطورين من بناء حلول تقنية ذات أثر مستدام.
-        </p>
-
-        <!-- حاوية المشاريع الديناميكية -->
-        <div id="projects-container" class="w-full max-w-4xl flex flex-col gap-6">
-            <!-- سيتم حقن المشاريع هنا عبر الجافاسكربت -->
-            <div id="loading" class="text-slate-500 animate-pulse">جاري تحميل المشاريع...</div>
-        </div>
-
-        <div id="support-section" class="fade-in-up delay-200 mt-20 flex flex-col items-center">
-            <h4 class="text-lg font-bold text-slate-800 mb-4">هل تؤمن برؤيتنا وترغب في تسريع الخطى؟</h4>
-            <button onclick="openModal()" class="group relative px-8 py-4 bg-dark text-white rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl hover:bg-slate-800 transition-all duration-300 overflow-hidden">
-                <span class="relative z-10 flex items-center gap-3"><span class="text-2xl">☕</span> ادعم المطور (كوب قهوة)</span>
-                <div class="absolute inset-0 h-full w-full bg-white/20 transform -skew-x-12 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
-            </button>
-            <p class="text-sm text-slate-500 mt-4">دعمك يذهب مباشرة لتمويل الخوادم وتفريغ المطور.</p>
-        </div>
-    </main>
-
-    <footer class="w-full py-6 text-center text-slate-500 text-sm border-t border-slate-200 mt-auto">
-        <p>بني بحب وتوكل. منصة أفق &copy; 2024</p>
-    </footer>
-
-    <!-- نافذة الدعم -->
-    <div id="supportModal" class="fixed inset-0 z-50 hidden opacity-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="modal-content bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative">
-            <button onclick="closeModal()" class="absolute top-4 left-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            <div class="text-center">
-                <div class="text-5xl mb-4">☕</div>
-                <h3 class="text-2xl font-bold text-dark mb-2">شكراً لاهتمامك بالدعم!</h3>
-                <p class="text-slate-600 mb-6">نحن في طور إعداد وسائل الدعم الرسمية. حالياً، دعاءك ونشرك للمنصة هو أكبر دعم لنا.</p>
-                <button onclick="closeModal()" class="w-full py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-colors">فهمت، سأنتظركم بشوق!</button>
+    <!-- شريط التنقل -->
+    <nav class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-40">
+        <div class="container mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-md">أ</div>
+                <h1 class="text-2xl font-extrabold text-gray-800 tracking-tight">أُفُق</h1>
+            </div>
+            <div>
+                <button onclick="toggleModal('supportModal')" class="bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-600 hover:text-white px-5 py-2 rounded-lg font-bold transition duration-300 shadow-sm">
+                    ☕ ادعم المطور
+                </button>
             </div>
         </div>
+    </nav>
+
+    <!-- القسم التعريفي -->
+    <header class="container mx-auto px-4 md:px-8 py-16 md:py-24 text-center max-w-3xl">
+        <span class="text-emerald-600 font-bold tracking-wider text-sm bg-emerald-50 px-3 py-1 rounded-full mb-4 inline-block">ترقبونا قريباً</span>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
+            نبتكر أدوات تقنية <br> <span class="text-emerald-600">لأثر يمتد</span>
+        </h2>
+        <p class="text-lg text-gray-600 leading-relaxed mb-8">
+            "أفق" هي منصة غير ربحية تحتضن المشاريع الإسلامية الريادية والتطبيقات الهادفة. نعتمد على التقنيات مفتوحة المصدر والذكاء الاصطناعي لتقديم حلول مجانية واحترافية.
+        </p>
+    </header>
+
+    <!-- قسم المشاريع (يتم تعبئته ديناميكياً) -->
+    <section class="container mx-auto px-4 md:px-8 py-12">
+        <h3 class="text-2xl font-bold mb-8 text-gray-800 border-r-4 border-emerald-500 pr-3">مشاريع أفق الحالية</h3>
+        
+        <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- جاري التحميل -->
+            <div class="col-span-full text-center text-gray-400 py-10" id="loading-msg">
+                <span class="animate-pulse">جاري جلب المشاريع...</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- نافذة الدعم المنبثقة -->
+    <div id="supportModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden z-50 flex items-center justify-center transition-opacity opacity-0">
+        <div class="bg-white rounded-2xl w-11/12 max-w-md p-6 md:p-8 transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-2xl font-bold text-gray-800">☕ كوب قهوة للمطور</h3>
+                <button onclick="toggleModal('supportModal')" class="text-gray-400 hover:text-red-500 text-2xl font-bold">&times;</button>
+            </div>
+            <p class="text-gray-600 text-sm mb-6 leading-relaxed">
+                هذه المنصة وكل ما فيها من تطبيقات مجانية تماماً ومبنية بجهد فردي (إحسان). دعمك الرمزي يساهم في تغطية تكاليف الخوادم وتطوير المزيد من الأدوات النافعة.
+            </p>
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 text-center mb-6">
+                <span class="block text-xs text-gray-500 mb-2">رابط الدعم (PayPal / BuyMeACoffee)</span>
+                <a href="#" class="text-emerald-600 font-bold hover:underline">اضغط هنا للانتقال لصفحة الدعم</a>
+            </div>
+            <button onclick="toggleModal('supportModal')" class="w-full bg-gray-800 text-white py-3 rounded-lg font-bold hover:bg-gray-900 transition shadow-md">إغلاق</button>
+        </div>
     </div>
 
+    <!-- سكربت جلب البيانات -->
     <script>
-        tailwind.config.theme.extend.keyframes = { shimmer: { '100%': { transform: 'translateX(200%) skewX(-12deg)' } } }
-        
-        const modal = document.getElementById('supportModal');
-        function openModal() { modal.classList.remove('hidden'); setTimeout(() => { modal.classList.remove('opacity-0'); modal.classList.add('active'); }, 10); }
-        function closeModal() { modal.classList.remove('active'); modal.classList.add('opacity-0'); setTimeout(() => modal.classList.add('hidden'), 300); }
-        window.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+        // دالة فتح وإغلاق النافذة المنبثقة
+        function toggleModal(modalID) {
+            const modal = document.getElementById(modalID);
+            const body = document.body;
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                setTimeout(() => { modal.classList.remove('opacity-0'); modal.firstElementChild.classList.remove('scale-95'); }, 10);
+                body.classList.add('modal-active');
+            } else {
+                modal.classList.add('opacity-0');
+                modal.firstElementChild.classList.add('scale-95');
+                setTimeout(() => { modal.classList.add('hidden'); }, 300);
+                body.classList.remove('modal-active');
+            }
+        }
 
         // جلب المشاريع من ملف JSON
         async function fetchProjects() {
             const container = document.getElementById('projects-container');
-            const loading = document.getElementById('loading');
-            
+            const loadingMsg = document.getElementById('loading-msg');
+
             try {
-                // إضافة timestamp لمنع تخزين الكاش (Cache) المزعج عند التحديث
-                const response = await fetch('projects.json?t=' + new Date().getTime()); 
-                if (!response.ok) throw new Error('فشل جلب البيانات');
+                // إضافة timestamp لتجنب الكاش (Cache)
+                const response = await fetch('projects.json?t=' + new Date().getTime());
+                if (!response.ok) throw new Error('Network response was not ok');
+                const data = await response.json();
                 
-                const projects = await response.json();
-                loading.style.display = 'none';
-                
-                projects.forEach((project, index) => {
-                    const delay = 300 + (index * 100);
-                    const tagsHtml = project.tags.map(tag => `<span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-semibold">${tag}</span>`).join('');
+                container.innerHTML = ''; // تفريغ الحاوية
+
+                if (data.projects.length === 0) {
+                    container.innerHTML = '<div class="col-span-full text-center text-gray-500 py-10">لا توجد مشاريع مضافة حالياً.</div>';
+                    return;
+                }
+
+                data.projects.forEach(proj => {
+                    let statusColor = proj.status === 'قريباً' ? 'bg-amber-100 text-amber-700' : 
+                                      proj.status === 'نسخة تجريبية' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-800';
                     
-                    const projectHtml = `
-                        <div class="fade-in-up w-full bg-white rounded-3xl shadow-xl shadow-slate-200/50 p-6 md:p-10 border border-slate-100 relative overflow-hidden text-right" style="animation-delay: ${delay}ms;">
-                            <div class="absolute top-0 right-0 w-2 h-full bg-gradient-to-b from-primary to-secondary"></div>
-                            <div class="flex flex-col md:flex-row items-center gap-6">
-                                <div class="w-20 h-20 shrink-0 rounded-2xl bg-slate-50 flex items-center justify-center border border-slate-100 shadow-inner">
-                                    ${project.icon}
-                                </div>
-                                <div class="flex-grow text-center md:text-right">
-                                    <span class="text-sm font-bold text-secondary mb-2 block">${project.status}</span>
-                                    <h3 class="text-2xl font-bold text-dark mb-2">${project.title}</h3>
-                                    <p class="text-slate-600 leading-relaxed mb-4">${project.description}</p>
-                                    <div class="flex flex-wrap justify-center md:justify-start gap-2">
-                                        ${tagsHtml}
+                    // توليد الكلمات المفتاحية
+                    let tagsHtml = '';
+                    if(proj.tags && proj.tags.length > 0) {
+                        tagsHtml = '<div class="mt-4 flex flex-wrap gap-2">' + proj.tags.map(tag => `<span class="bg-gray-100 text-gray-600 text-xs font-bold px-2 py-1 rounded-md">${tag}</span>`).join('') + '</div>';
+                    }
+
+                    // توليد مسار الصورة
+                    let imgSrc = proj.image ? `Photos/${proj.image}` : 'https://via.placeholder.com/80';
+
+                    const card = `
+                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition duration-300 flex flex-col justify-between group h-full">
+                            <div>
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <img src="${imgSrc}" alt="${proj.title}" onerror="this.src='https://via.placeholder.com/80'" class="w-14 h-14 rounded-xl object-cover shadow-sm border border-gray-100 flex-shrink-0">
+                                        <div>
+                                            <h4 class="text-xl font-bold text-gray-800 group-hover:text-emerald-600 transition">${proj.title}</h4>
+                                            <span class="inline-block mt-1 text-[10px] font-bold ${statusColor} px-2 py-0.5 rounded-full">${proj.status}</span>
+                                        </div>
                                     </div>
                                 </div>
+                                <p class="text-gray-600 text-sm leading-relaxed">${proj.description}</p>
+                                ${tagsHtml}
                             </div>
+                            ${proj.link ? `<a href="${proj.link}" target="_blank" class="mt-6 block text-center bg-gray-50 hover:bg-emerald-600 hover:text-white text-gray-700 font-bold py-2.5 rounded-lg transition border border-gray-200 hover:border-transparent">عرض المشروع &larr;</a>` : ''}
                         </div>
                     `;
-                    container.innerHTML += projectHtml;
+                    container.innerHTML += card;
                 });
             } catch (error) {
-                loading.innerHTML = 'عذراً، حدث خطأ في تحميل المشاريع. يرجى المحاولة لاحقاً.';
-                console.error(error);
+                loadingMsg.innerHTML = 'عذراً، حدث خطأ أثناء تحميل المشاريع.';
+                console.error("Error fetching projects:", error);
             }
         }
 
         // تشغيل الدالة عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', fetchProjects);
+        window.onload = fetchProjects;
     </script>
 </body>
 </html>

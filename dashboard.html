@@ -6,9 +6,7 @@
     <title>أفق - المحرك الذكي</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; }
-    </style>
+    <style>body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; }</style>
 </head>
 <body class="text-gray-800">
 
@@ -16,148 +14,145 @@
         <div class="bg-white p-8 rounded-2xl shadow-xl w-96 text-center border-t-4 border-emerald-500">
             <h2 class="text-3xl font-extrabold mb-6 text-gray-800">بوابة <span class="text-emerald-600">أفق</span></h2>
             <input type="password" id="passwordInput" class="w-full p-3 border rounded-lg mb-4 text-center focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="كلمة المرور">
-            <button onclick="checkPassword()" class="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-700 transition font-bold shadow-lg">تسجيل الدخول</button>
-            <p id="errorMsg" class="text-red-500 mt-3 text-sm hidden font-bold">كلمة المرور غير صحيحة، حاول مجدداً.</p>
+            <button onclick="checkPassword()" class="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-700 transition font-bold shadow-lg">دخول</button>
         </div>
     </div>
 
-    <div id="dashboardSection" class="hidden container mx-auto p-4 md:p-8 max-w-6xl">
+    <div id="dashboardSection" class="hidden container mx-auto p-4 md:p-8 max-w-7xl">
         <div class="flex flex-col md:flex-row justify-between items-center mb-8 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <div>
-                <h1 class="text-2xl font-bold text-gray-800">إدارة مشاريع أفق</h1>
-            </div>
+            <h1 class="text-2xl font-bold text-gray-800">إدارة أفق (الأخبار والمشاريع)</h1>
             <button onclick="downloadJSON()" class="mt-4 md:mt-0 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition font-bold flex items-center gap-2">
-                <span>⬇️</span> تحميل projects.json
+                ⬇️ تحميل ملف JSON الشامل
             </button>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- النموذج -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-fit">
-                <h2 class="text-lg font-bold mb-4 text-emerald-700 border-b pb-2">➕ إضافة تطبيق جديد</h2>
-                <form id="projectForm" onsubmit="addProject(event)">
-                    <div class="mb-4">
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">اسم التطبيق</label>
-                        <input type="text" id="pTitle" required class="w-full p-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- قسم الأخبار -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b pb-2">📰 قسم الأخبار (Carousel)</h2>
+                
+                <form id="newsForm" onsubmit="addNews(event)" class="mb-6 bg-indigo-50 p-4 rounded-xl border border-indigo-100">
+                    <div class="grid grid-cols-2 gap-4 mb-3">
+                        <input type="text" id="nTitle" required placeholder="عنوان الخبر" class="p-2 border rounded focus:ring-2 focus:ring-indigo-500">
+                        <input type="date" id="nDate" required class="p-2 border rounded focus:ring-2 focus:ring-indigo-500">
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">وصف قصير</label>
-                        <textarea id="pDesc" required rows="3" class="w-full p-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
-                    </div>
-                    
+                    <textarea id="nDesc" required rows="2" placeholder="تفاصيل الخبر..." class="w-full p-2 border rounded mb-3 focus:ring-2 focus:ring-indigo-500"></textarea>
                     <div class="grid grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">اسم الأيقونة</label>
-                            <input type="text" id="pImage" placeholder="مثال: app.png" class="w-full p-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-emerald-500 text-left focus:outline-none" dir="ltr">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">الحالة</label>
-                            <select id="pStatus" class="w-full p-2 border rounded-lg bg-gray-50 focus:outline-none">
-                                <option value="متوفر الآن">متوفر الآن</option>
-                                <option value="قريباً">قريباً</option>
-                                <option value="نسخة تجريبية">نسخة تجريبية</option>
-                            </select>
-                        </div>
+                        <input type="text" id="nImage" placeholder="صورة الخبر (app.png)" class="p-2 border rounded" dir="ltr">
+                        <input type="url" id="nLink" placeholder="رابط (اختياري)" class="p-2 border rounded" dir="ltr">
                     </div>
-
-                    <div class="mb-4">
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">الكلمات المفتاحية (افصل بينها بفاصلة)</label>
-                        <input type="text" id="pTags" placeholder="Windows, مجاني, مفتوح المصدر" class="w-full p-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                    </div>
-
-                    <div class="mb-6">
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">رابط التحميل</label>
-                        <input type="url" id="pLink" placeholder="https://..." class="w-full p-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-emerald-500 text-left focus:outline-none" dir="ltr">
-                    </div>
-                    <button type="submit" class="w-full bg-emerald-600 text-white py-2 rounded-lg shadow hover:bg-emerald-700 transition font-bold">حفظ التطبيق</button>
+                    <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg font-bold hover:bg-indigo-700">إضافة خبر</button>
                 </form>
+
+                <div id="newsList" class="space-y-3"></div>
             </div>
 
-            <!-- القائمة -->
-            <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h2 class="text-lg font-bold mb-4 text-emerald-700 border-b pb-2">📂 تطبيقاتك</h2>
+            <!-- قسم المشاريع -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <h2 class="text-xl font-bold mb-4 text-emerald-700 border-b pb-2">🚀 قسم المشاريع</h2>
+                
+                <form id="projectForm" onsubmit="addProject(event)" class="mb-6 bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+                    <div class="grid grid-cols-2 gap-4 mb-3">
+                        <input type="text" id="pTitle" required placeholder="اسم التطبيق" class="p-2 border rounded focus:ring-2 focus:ring-emerald-500">
+                        <select id="pStatus" class="p-2 border rounded">
+                            <option>متوفر الآن</option><option>قريباً</option><option>نسخة تجريبية</option>
+                        </select>
+                    </div>
+                    <textarea id="pDesc" required rows="2" placeholder="وصف التطبيق..." class="w-full p-2 border rounded mb-3 focus:ring-2 focus:ring-emerald-500"></textarea>
+                    <div class="mb-3">
+                        <input type="text" id="pTags" placeholder="الكلمات المفتاحية (مفصولة بفاصلة)" class="w-full p-2 border rounded">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <input type="text" id="pImage" placeholder="صورة الأيقونة" class="p-2 border rounded" dir="ltr">
+                        <input type="url" id="pLink" placeholder="رابط التحميل" class="p-2 border rounded" dir="ltr">
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 text-white py-2 rounded-lg font-bold hover:bg-emerald-700">إضافة مشروع</button>
+                </form>
+
                 <div id="projectsList" class="space-y-3"></div>
             </div>
+
         </div>
     </div>
 
     <script>
-        let dataStore = { projects: [] };
+        let dataStore = { news: [], projects: [] };
 
         function checkPassword() {
             if(document.getElementById('passwordInput').value === 'sadeed') {
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('dashboardSection').classList.remove('hidden');
                 fetchExistingData();
-            } else {
-                document.getElementById('errorMsg').classList.remove('hidden');
             }
         }
 
         async function fetchExistingData() {
             try {
                 const response = await fetch('projects.json?t=' + new Date().getTime());
-                if(response.ok) { dataStore = await response.json(); }
+                if(response.ok) { 
+                    const data = await response.json(); 
+                    if(data.news) dataStore.news = data.news;
+                    if(data.projects) dataStore.projects = data.projects;
+                }
             } catch (error) { console.log('ملف جديد.'); }
-            renderList();
+            renderNewsList();
+            renderProjectsList();
         }
 
-        function renderList() {
-            const list = document.getElementById('projectsList');
-            list.innerHTML = '';
-            
-            if(dataStore.projects.length === 0) {
-                list.innerHTML = '<p class="text-gray-400 text-center py-8">لا توجد تطبيقات مضافة.</p>';
-                return;
-            }
-
-            dataStore.projects.forEach((proj, index) => {
-                let tagsHtml = proj.tags ? proj.tags.map(tag => `<span class="bg-gray-200 text-gray-700 text-[10px] px-1.5 py-0.5 rounded mr-1">${tag}</span>`).join('') : '';
-                let imgSrc = proj.image ? `Photos/${proj.image}` : 'https://via.placeholder.com/40';
-
+        function renderNewsList() {
+            const list = document.getElementById('newsList');
+            list.innerHTML = dataStore.news.length ? '' : '<p class="text-gray-400 text-center">لا توجد أخبار.</p>';
+            dataStore.news.forEach((n, i) => {
                 list.innerHTML += `
-                    <div class="flex justify-between items-center p-4 border rounded-xl hover:shadow-md transition bg-gray-50">
-                        <div class="flex items-center gap-4 w-full">
-                            <img src="${imgSrc}" onerror="this.src='https://via.placeholder.com/40'" class="w-12 h-12 rounded-lg object-cover border border-gray-200 flex-shrink-0">
-                            <div class="flex-grow">
-                                <h3 class="font-bold text-gray-800 mb-1">${proj.title} <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full mr-2">${proj.status}</span></h3>
-                                <p class="text-xs text-gray-500 line-clamp-1 mb-1">${proj.description}</p>
-                                <div>${tagsHtml}</div>
-                            </div>
-                            <button onclick="deleteProject(${index})" class="text-red-500 hover:bg-red-100 px-3 py-2 rounded-lg transition text-sm font-bold flex-shrink-0">حذف</button>
-                        </div>
-                    </div>
-                `;
+                    <div class="flex justify-between items-center p-3 border rounded-lg bg-gray-50">
+                        <div><h4 class="font-bold text-sm">${n.title}</h4><span class="text-xs text-gray-500">${n.date}</span></div>
+                        <button onclick="deleteNews(${i})" class="text-red-500 text-sm font-bold bg-red-50 px-2 py-1 rounded">حذف</button>
+                    </div>`;
             });
+        }
+
+        function renderProjectsList() {
+            const list = document.getElementById('projectsList');
+            list.innerHTML = dataStore.projects.length ? '' : '<p class="text-gray-400 text-center">لا توجد مشاريع.</p>';
+            dataStore.projects.forEach((p, i) => {
+                list.innerHTML += `
+                    <div class="flex justify-between items-center p-3 border rounded-lg bg-gray-50">
+                        <div><h4 class="font-bold text-sm">${p.title}</h4><span class="text-xs text-emerald-600">${p.status}</span></div>
+                        <button onclick="deleteProject(${i})" class="text-red-500 text-sm font-bold bg-red-50 px-2 py-1 rounded">حذف</button>
+                    </div>`;
+            });
+        }
+
+        function addNews(e) {
+            e.preventDefault();
+            dataStore.news.unshift({
+                id: Date.now(),
+                title: document.getElementById('nTitle').value,
+                description: document.getElementById('nDesc').value,
+                image: document.getElementById('nImage').value,
+                link: document.getElementById('nLink').value,
+                date: document.getElementById('nDate').value
+            });
+            renderNewsList(); document.getElementById('newsForm').reset();
         }
 
         function addProject(e) {
             e.preventDefault();
-            
-            // معالجة الكلمات المفتاحية
-            const rawTags = document.getElementById('pTags').value;
-            const tagsArray = rawTags.split(',').map(tag => tag.trim()).filter(tag => tag !== "");
-
-            const newProject = {
+            const tags = document.getElementById('pTags').value.split(',').map(t => t.trim()).filter(t => t);
+            dataStore.projects.unshift({
                 title: document.getElementById('pTitle').value,
                 description: document.getElementById('pDesc').value,
                 status: document.getElementById('pStatus').value,
                 link: document.getElementById('pLink').value,
                 image: document.getElementById('pImage').value,
-                tags: tagsArray
-            };
-            
-            dataStore.projects.unshift(newProject);
-            renderList();
-            document.getElementById('projectForm').reset();
+                tags: tags
+            });
+            renderProjectsList(); document.getElementById('projectForm').reset();
         }
 
-        function deleteProject(index) {
-            if(confirm('هل أنت متأكد من الحذف؟')) {
-                dataStore.projects.splice(index, 1);
-                renderList();
-            }
-        }
+        function deleteNews(i) { if(confirm('حذف الخبر؟')) { dataStore.news.splice(i, 1); renderNewsList(); } }
+        function deleteProject(i) { if(confirm('حذف المشروع؟')) { dataStore.projects.splice(i, 1); renderProjectsList(); } }
 
         function downloadJSON() {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataStore, null, 4));

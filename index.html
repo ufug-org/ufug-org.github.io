@@ -7,8 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; }
+        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
         .modal-active { overflow: hidden; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="text-gray-800 antialiased selection:bg-emerald-200">
@@ -29,24 +30,35 @@
     </nav>
 
     <!-- القسم التعريفي -->
-    <header class="container mx-auto px-4 md:px-8 py-16 md:py-24 text-center max-w-3xl">
+    <header class="container mx-auto px-4 md:px-8 py-12 md:py-16 text-center max-w-3xl">
         <span class="text-emerald-600 font-bold tracking-wider text-sm bg-emerald-50 px-3 py-1 rounded-full mb-4 inline-block">ترقبونا قريباً</span>
         <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
             نبتكر أدوات تقنية <br> <span class="text-emerald-600">لأثر يمتد</span>
         </h2>
-        <p class="text-lg text-gray-600 leading-relaxed mb-8">
-            "أفق" هي منصة غير ربحية تحتضن المشاريع الإسلامية الريادية والتطبيقات الهادفة. نعتمد على التقنيات مفتوحة المصدر والذكاء الاصطناعي لتقديم حلول مجانية واحترافية.
+        <p class="text-lg text-gray-600 leading-relaxed mb-4">
+            "أفق" هي منصة غير ربحية تحتضن المشاريع الإسلامية الريادية والتطبيقات الهادفة.
         </p>
     </header>
 
-    <!-- قسم المشاريع (يتم تعبئته ديناميكياً) -->
-    <section class="container mx-auto px-4 md:px-8 py-12">
+    <!-- قسم لوحة الأخبار (Carousel) -->
+    <section id="news-section" class="container mx-auto px-4 md:px-8 mb-12 hidden">
+        <div class="relative w-full max-w-5xl mx-auto bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+            <div id="slides-container" class="flex transition-transform duration-500 ease-out w-full">
+                <!-- سيتم حقن الأخبار هنا -->
+            </div>
+            <!-- نقاط التقليب -->
+            <div id="dots-container" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+                <!-- سيتم حقن النقاط هنا -->
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المشاريع -->
+    <section class="container mx-auto px-4 md:px-8 py-8 mb-12">
         <h3 class="text-2xl font-bold mb-8 text-gray-800 border-r-4 border-emerald-500 pr-3">مشاريع أفق الحالية</h3>
-        
         <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- جاري التحميل -->
             <div class="col-span-full text-center text-gray-400 py-10" id="loading-msg">
-                <span class="animate-pulse">جاري جلب المشاريع...</span>
+                <span class="animate-pulse font-bold">جاري جلب البيانات...</span>
             </div>
         </div>
     </section>
@@ -59,19 +71,21 @@
                 <button onclick="toggleModal('supportModal')" class="text-gray-400 hover:text-red-500 text-2xl font-bold">&times;</button>
             </div>
             <p class="text-gray-600 text-sm mb-6 leading-relaxed">
-                هذه المنصة وكل ما فيها من تطبيقات مجانية تماماً ومبنية بجهد فردي (إحسان). دعمك الرمزي يساهم في تغطية تكاليف الخوادم وتطوير المزيد من الأدوات النافعة.
+                هذه المنصة مبنية بجهد فردي (إحسان). دعمك يساهم في تغطية الخوادم وتطوير الأدوات.
             </p>
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 text-center mb-6">
-                <span class="block text-xs text-gray-500 mb-2">رابط الدعم (PayPal / BuyMeACoffee)</span>
                 <a href="#" class="text-emerald-600 font-bold hover:underline">اضغط هنا للانتقال لصفحة الدعم</a>
             </div>
             <button onclick="toggleModal('supportModal')" class="w-full bg-gray-800 text-white py-3 rounded-lg font-bold hover:bg-gray-900 transition shadow-md">إغلاق</button>
         </div>
     </div>
 
-    <!-- سكربت جلب البيانات -->
+    <!-- السكربتات -->
     <script>
-        // دالة فتح وإغلاق النافذة المنبثقة
+        let currentSlide = 0;
+        let slideInterval;
+        let newsDataArray = [];
+
         function toggleModal(modalID) {
             const modal = document.getElementById(modalID);
             const body = document.body;
@@ -87,76 +101,138 @@
             }
         }
 
-        // جلب المشاريع من ملف JSON
-        // جلب المشاريع من ملف JSON
-        async function fetchProjects() {
-            const container = document.getElementById('projects-container');
+        async function fetchAllData() {
+            const projectsContainer = document.getElementById('projects-container');
             const loadingMsg = document.getElementById('loading-msg');
 
             try {
-                // إضافة timestamp قوي لتجنب الكاش (Cache) بشكل قاطع
                 const cacheBuster = new Date().getTime();
                 const response = await fetch('projects.json?nocache=' + cacheBuster);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
+                if (!response.ok) throw new Error(`HTTP error!`);
                 const data = await response.json();
-                console.log("البيانات المستلمة:", data); // هذه ستساعدنا في تتبع المشكلة إن استمرت
                 
-                container.innerHTML = ''; // تفريغ الحاوية
+                loadingMsg.style.display = 'none';
 
-                // تحقق قوي جداً من وجود المصفوفة وصحتها
-                if (!data || !data.projects || !Array.isArray(data.projects) || data.projects.length === 0) {
-                    container.innerHTML = '<div class="col-span-full text-center text-gray-500 py-10 font-bold">لم يتم العثور على مشاريع لعرضها حالياً.</div>';
-                    return;
+                // رسم الأخبار
+                if (data.news && Array.isArray(data.news) && data.news.length > 0) {
+                    renderNews(data.news);
                 }
 
-                data.projects.forEach(proj => {
-                    let statusColor = proj.status === 'قريباً' ? 'bg-amber-100 text-amber-700' : 
-                                      proj.status === 'نسخة تجريبية' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-800';
-                    
-                    let tagsHtml = '';
-                    if(proj.tags && Array.isArray(proj.tags) && proj.tags.length > 0) {
-                        tagsHtml = '<div class="mt-4 flex flex-wrap gap-2">' + proj.tags.map(tag => `<span class="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-1 rounded-md border border-gray-200">${tag}</span>`).join('') + '</div>';
-                    }
+                // رسم المشاريع
+                if (data.projects && Array.isArray(data.projects) && data.projects.length > 0) {
+                    renderProjects(data.projects, projectsContainer);
+                } else {
+                    projectsContainer.innerHTML = '<div class="col-span-full text-center text-gray-500 py-10 font-bold">لم يتم العثور على مشاريع.</div>';
+                }
 
-                    let imgSrc = proj.image ? `Photos/${proj.image}` : 'https://via.placeholder.com/80';
-
-                    const card = `
-                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition duration-300 flex flex-col justify-between group h-full relative overflow-hidden">
-                            <!-- شريط ديكوري صغير -->
-                            <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-emerald-600"></div>
-                            
-                            <div>
-                                <div class="flex items-start justify-between mb-4 mt-2">
-                                    <div class="flex items-center gap-3 w-full">
-                                        <img src="${imgSrc}" alt="${proj.title}" onerror="this.src='https://via.placeholder.com/80?text=أفق'" class="w-14 h-14 rounded-xl object-cover shadow-sm border border-gray-100 flex-shrink-0">
-                                        <div class="flex-grow">
-                                            <h4 class="text-xl font-bold text-gray-800 group-hover:text-emerald-600 transition leading-tight mb-1">${proj.title}</h4>
-                                            <span class="inline-block text-[10px] font-bold ${statusColor} px-2 py-0.5 rounded-full">${proj.status}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="text-gray-600 text-sm leading-relaxed mb-4">${proj.description}</p>
-                            </div>
-                            
-                            <div>
-                                ${tagsHtml}
-                                ${proj.link ? `<a href="${proj.link}" target="_blank" class="mt-5 block text-center bg-gray-50 hover:bg-emerald-600 hover:text-white text-gray-700 font-bold py-2.5 rounded-lg transition border border-gray-200 hover:border-transparent text-sm shadow-sm">تصفح المشروع &larr;</a>` : ''}
-                            </div>
-                        </div>
-                    `;
-                    container.innerHTML += card;
-                });
             } catch (error) {
-                loadingMsg.innerHTML = '<span class="text-red-500 font-bold">عذراً، حدث خطأ أثناء تحميل البيانات. تأكد من رفع الملفات بشكل صحيح.</span>';
-                console.error("تفاصيل الخطأ:", error);
+                loadingMsg.innerHTML = '<span class="text-red-500 font-bold">عذراً، حدث خطأ أثناء تحميل البيانات.</span>';
             }
         }
-        // تشغيل الدالة عند تحميل الصفحة
-        window.onload = fetchProjects;
+
+        function renderNews(news) {
+            newsDataArray = news;
+            document.getElementById('news-section').classList.remove('hidden');
+            const slidesContainer = document.getElementById('slides-container');
+            const dotsContainer = document.getElementById('dots-container');
+            
+            slidesContainer.innerHTML = '';
+            dotsContainer.innerHTML = '';
+
+            news.forEach((item, index) => {
+                let imgSrc = item.image ? `Photos/${item.image}` : 'https://via.placeholder.com/600x400?text=أفق';
+                
+                // بناء الشريحة
+                slidesContainer.innerHTML += `
+                    <div class="w-full flex-shrink-0 flex flex-col md:flex-row bg-emerald-50 relative group">
+                        <div class="p-8 md:p-12 md:w-2/3 flex flex-col justify-center">
+                            <span class="text-xs text-emerald-600 font-black mb-3 bg-emerald-100 px-3 py-1 rounded-full w-max tracking-wide">${item.date}</span>
+                            <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-4 leading-tight">${item.title}</h3>
+                            <p class="text-gray-600 mb-6 leading-relaxed text-sm md:text-base">${item.description}</p>
+                            ${item.link ? `<a href="${item.link}" target="_blank" class="inline-block bg-emerald-600 text-white px-6 py-2.5 rounded-lg font-bold w-max hover:bg-emerald-700 transition shadow-md">اكتشف المزيد</a>` : ''}
+                        </div>
+                        <div class="md:w-1/3 min-h-[250px] bg-cover bg-center border-r-4 border-emerald-500" style="background-image: url('${imgSrc}')"></div>
+                    </div>
+                `;
+
+                // بناء النقطة
+                const dot = document.createElement('button');
+                dot.className = `w-3 h-3 rounded-full transition-all duration-300 news-dot ${index === 0 ? 'bg-emerald-600 w-6' : 'bg-gray-300'}`;
+                dot.onclick = () => goToSlide(index);
+                dotsContainer.appendChild(dot);
+            });
+
+            startAutoSlide();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+            resetAutoSlide();
+        }
+
+        function updateCarousel() {
+            const slides = document.getElementById('slides-container');
+            // في اللغة العربية RTL، الإزاحة الموجبة تحرك العنصر لليمين لتظهر العناصر التي على اليسار
+            slides.style.transform = `translateX(${currentSlide * 100}%)`;
+            
+            document.querySelectorAll('.news-dot').forEach((dot, i) => {
+                dot.classList.toggle('bg-emerald-600', i === currentSlide);
+                dot.classList.toggle('w-6', i === currentSlide);
+                dot.classList.toggle('bg-gray-300', i !== currentSlide);
+                dot.classList.toggle('w-3', i !== currentSlide);
+            });
+        }
+
+        function startAutoSlide() {
+            slideInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % newsDataArray.length;
+                updateCarousel();
+            }, 6000);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(slideInterval);
+            startAutoSlide();
+        }
+
+        function renderProjects(projects, container) {
+            projects.forEach(proj => {
+                let statusColor = proj.status === 'قريباً' ? 'bg-amber-100 text-amber-700' : 
+                                  proj.status === 'نسخة تجريبية' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-800';
+                
+                let tagsHtml = '';
+                if(proj.tags && Array.isArray(proj.tags)) {
+                    tagsHtml = '<div class="mt-4 flex flex-wrap gap-2">' + proj.tags.map(tag => `<span class="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-1 rounded-md border border-gray-200">${tag}</span>`).join('') + '</div>';
+                }
+
+                let imgSrc = proj.image ? `Photos/${proj.image}` : 'https://via.placeholder.com/80?text=أفق';
+
+                container.innerHTML += `
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition duration-300 flex flex-col justify-between h-full relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-emerald-600"></div>
+                        <div>
+                            <div class="flex items-start justify-between mb-4 mt-2">
+                                <div class="flex items-center gap-3 w-full">
+                                    <img src="${imgSrc}" alt="${proj.title}" onerror="this.src='https://via.placeholder.com/80?text=أفق'" class="w-14 h-14 rounded-xl object-cover shadow-sm border border-gray-100 flex-shrink-0">
+                                    <div class="flex-grow">
+                                        <h4 class="text-lg font-bold text-gray-800 mb-1 leading-tight">${proj.title}</h4>
+                                        <span class="inline-block text-[10px] font-bold ${statusColor} px-2 py-0.5 rounded-full">${proj.status}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-4">${proj.description}</p>
+                        </div>
+                        <div>
+                            ${tagsHtml}
+                            ${proj.link ? `<a href="${proj.link}" target="_blank" class="mt-5 block text-center bg-gray-50 hover:bg-emerald-600 hover:text-white text-gray-700 font-bold py-2.5 rounded-lg transition border border-gray-200 hover:border-transparent text-sm shadow-sm">تصفح المشروع &larr;</a>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        window.onload = fetchAllData;
     </script>
 </body>
 </html>

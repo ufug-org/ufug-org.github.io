@@ -104,29 +104,39 @@
         async function fetchAllData() {
             const projectsContainer = document.getElementById('projects-container');
             const loadingMsg = document.getElementById('loading-msg');
+            const cacheBuster = new Date().getTime();
 
             try {
-                const cacheBuster = new Date().getTime();
-                const response = await fetch('projects.json?nocache=' + cacheBuster);
-                if (!response.ok) throw new Error(`HTTP error!`);
-                const data = await response.json();
-                
-                loadingMsg.style.display = 'none';
-
-                // رسم الأخبار
-                if (data.news && Array.isArray(data.news) && data.news.length > 0) {
-                    renderNews(data.news);
+                // جلب الأخبار من news.json
+                const newsResponse = await fetch(`https://ufug.org/news.json?nocache=${cacheBuster}`);
+                if (newsResponse.ok) {
+                    const newsData = await newsResponse.json();
+                    if (newsData.news && Array.isArray(newsData.news) && newsData.news.length > 0) {
+                        renderNews(newsData.news);
+                    }
+                } else {
+                    console.error("لم يتم العثور على ملف الأخبار أو هناك خطأ في الرابط.");
                 }
 
-                // رسم المشاريع
-                if (data.projects && Array.isArray(data.projects) && data.projects.length > 0) {
-                    renderProjects(data.projects, projectsContainer);
+                // جلب المشاريع من projects.json (افترضت أنه projects.json بناءً على المحادثة)
+                const projectsResponse = await fetch(`https://ufug.org/projects.json?nocache=${cacheBuster}`);
+                
+                loadingMsg.style.display = 'none'; // إخفاء رسالة التحميل
+
+                if (projectsResponse.ok) {
+                    const projectsData = await projectsResponse.json();
+                    if (projectsData.projects && Array.isArray(projectsData.projects) && projectsData.projects.length > 0) {
+                        renderProjects(projectsData.projects, projectsContainer);
+                    } else {
+                        projectsContainer.innerHTML = '<div class="col-span-full text-center text-gray-500 py-10 font-bold">لم يتم العثور على مشاريع.</div>';
+                    }
                 } else {
-                    projectsContainer.innerHTML = '<div class="col-span-full text-center text-gray-500 py-10 font-bold">لم يتم العثور على مشاريع.</div>';
+                    projectsContainer.innerHTML = '<div class="col-span-full text-center text-red-500 py-10 font-bold">حدث خطأ أثناء جلب المشاريع.</div>';
                 }
 
             } catch (error) {
-                loadingMsg.innerHTML = '<span class="text-red-500 font-bold">عذراً، حدث خطأ أثناء تحميل البيانات.</span>';
+                loadingMsg.innerHTML = '<span class="text-red-500 font-bold">عذراً، حدث خطأ عام أثناء تحميل البيانات.</span>';
+                console.error("تفاصيل الخطأ:", error);
             }
         }
 
@@ -142,7 +152,6 @@
             news.forEach((item, index) => {
                 let imgSrc = item.image ? `Photos/${item.image}` : 'https://via.placeholder.com/600x400?text=أفق';
                 
-                // بناء الشريحة
                 slidesContainer.innerHTML += `
                     <div class="w-full flex-shrink-0 flex flex-col md:flex-row bg-emerald-50 relative group">
                         <div class="p-8 md:p-12 md:w-2/3 flex flex-col justify-center">
@@ -155,7 +164,6 @@
                     </div>
                 `;
 
-                // بناء النقطة
                 const dot = document.createElement('button');
                 dot.className = `w-3 h-3 rounded-full transition-all duration-300 news-dot ${index === 0 ? 'bg-emerald-600 w-6' : 'bg-gray-300'}`;
                 dot.onclick = () => goToSlide(index);
@@ -173,7 +181,6 @@
 
         function updateCarousel() {
             const slides = document.getElementById('slides-container');
-            // في اللغة العربية RTL، الإزاحة الموجبة تحرك العنصر لليمين لتظهر العناصر التي على اليسار
             slides.style.transform = `translateX(${currentSlide * 100}%)`;
             
             document.querySelectorAll('.news-dot').forEach((dot, i) => {

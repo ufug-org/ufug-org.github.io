@@ -88,20 +88,28 @@
         }
 
         // جلب المشاريع من ملف JSON
+        // جلب المشاريع من ملف JSON
         async function fetchProjects() {
             const container = document.getElementById('projects-container');
             const loadingMsg = document.getElementById('loading-msg');
 
             try {
-                // إضافة timestamp لتجنب الكاش (Cache)
-                const response = await fetch('projects.json?t=' + new Date().getTime());
-                if (!response.ok) throw new Error('Network response was not ok');
+                // إضافة timestamp قوي لتجنب الكاش (Cache) بشكل قاطع
+                const cacheBuster = new Date().getTime();
+                const response = await fetch('projects.json?nocache=' + cacheBuster);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const data = await response.json();
+                console.log("البيانات المستلمة:", data); // هذه ستساعدنا في تتبع المشكلة إن استمرت
                 
                 container.innerHTML = ''; // تفريغ الحاوية
 
-                if (data.projects.length === 0) {
-                    container.innerHTML = '<div class="col-span-full text-center text-gray-500 py-10">لا توجد مشاريع مضافة حالياً.</div>';
+                // تحقق قوي جداً من وجود المصفوفة وصحتها
+                if (!data || !data.projects || !Array.isArray(data.projects) || data.projects.length === 0) {
+                    container.innerHTML = '<div class="col-span-full text-center text-gray-500 py-10 font-bold">لم يتم العثور على مشاريع لعرضها حالياً.</div>';
                     return;
                 }
 
@@ -109,41 +117,44 @@
                     let statusColor = proj.status === 'قريباً' ? 'bg-amber-100 text-amber-700' : 
                                       proj.status === 'نسخة تجريبية' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-800';
                     
-                    // توليد الكلمات المفتاحية
                     let tagsHtml = '';
-                    if(proj.tags && proj.tags.length > 0) {
-                        tagsHtml = '<div class="mt-4 flex flex-wrap gap-2">' + proj.tags.map(tag => `<span class="bg-gray-100 text-gray-600 text-xs font-bold px-2 py-1 rounded-md">${tag}</span>`).join('') + '</div>';
+                    if(proj.tags && Array.isArray(proj.tags) && proj.tags.length > 0) {
+                        tagsHtml = '<div class="mt-4 flex flex-wrap gap-2">' + proj.tags.map(tag => `<span class="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-1 rounded-md border border-gray-200">${tag}</span>`).join('') + '</div>';
                     }
 
-                    // توليد مسار الصورة
                     let imgSrc = proj.image ? `Photos/${proj.image}` : 'https://via.placeholder.com/80';
 
                     const card = `
-                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition duration-300 flex flex-col justify-between group h-full">
+                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition duration-300 flex flex-col justify-between group h-full relative overflow-hidden">
+                            <!-- شريط ديكوري صغير -->
+                            <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-emerald-600"></div>
+                            
                             <div>
-                                <div class="flex items-start justify-between mb-4">
-                                    <div class="flex items-center gap-3">
-                                        <img src="${imgSrc}" alt="${proj.title}" onerror="this.src='https://via.placeholder.com/80'" class="w-14 h-14 rounded-xl object-cover shadow-sm border border-gray-100 flex-shrink-0">
-                                        <div>
-                                            <h4 class="text-xl font-bold text-gray-800 group-hover:text-emerald-600 transition">${proj.title}</h4>
-                                            <span class="inline-block mt-1 text-[10px] font-bold ${statusColor} px-2 py-0.5 rounded-full">${proj.status}</span>
+                                <div class="flex items-start justify-between mb-4 mt-2">
+                                    <div class="flex items-center gap-3 w-full">
+                                        <img src="${imgSrc}" alt="${proj.title}" onerror="this.src='https://via.placeholder.com/80?text=أفق'" class="w-14 h-14 rounded-xl object-cover shadow-sm border border-gray-100 flex-shrink-0">
+                                        <div class="flex-grow">
+                                            <h4 class="text-xl font-bold text-gray-800 group-hover:text-emerald-600 transition leading-tight mb-1">${proj.title}</h4>
+                                            <span class="inline-block text-[10px] font-bold ${statusColor} px-2 py-0.5 rounded-full">${proj.status}</span>
                                         </div>
                                     </div>
                                 </div>
-                                <p class="text-gray-600 text-sm leading-relaxed">${proj.description}</p>
-                                ${tagsHtml}
+                                <p class="text-gray-600 text-sm leading-relaxed mb-4">${proj.description}</p>
                             </div>
-                            ${proj.link ? `<a href="${proj.link}" target="_blank" class="mt-6 block text-center bg-gray-50 hover:bg-emerald-600 hover:text-white text-gray-700 font-bold py-2.5 rounded-lg transition border border-gray-200 hover:border-transparent">عرض المشروع &larr;</a>` : ''}
+                            
+                            <div>
+                                ${tagsHtml}
+                                ${proj.link ? `<a href="${proj.link}" target="_blank" class="mt-5 block text-center bg-gray-50 hover:bg-emerald-600 hover:text-white text-gray-700 font-bold py-2.5 rounded-lg transition border border-gray-200 hover:border-transparent text-sm shadow-sm">تصفح المشروع &larr;</a>` : ''}
+                            </div>
                         </div>
                     `;
                     container.innerHTML += card;
                 });
             } catch (error) {
-                loadingMsg.innerHTML = 'عذراً، حدث خطأ أثناء تحميل المشاريع.';
-                console.error("Error fetching projects:", error);
+                loadingMsg.innerHTML = '<span class="text-red-500 font-bold">عذراً، حدث خطأ أثناء تحميل البيانات. تأكد من رفع الملفات بشكل صحيح.</span>';
+                console.error("تفاصيل الخطأ:", error);
             }
         }
-
         // تشغيل الدالة عند تحميل الصفحة
         window.onload = fetchProjects;
     </script>

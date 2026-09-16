@@ -1,0 +1,13 @@
+{
+    "socials": [
+        { "id": "facebook", "name": "فيسبوك", "url": "https://facebook.com" },
+        { "id": "twitter", "name": "إكس (تويتر)", "url": "https://twitter.com" },
+        { "id": "instagram", "name": "إنستجرام", "url": "https://instagram.com" },
+        { "id": "youtube", "name": "يوتيوب", "url": "https://youtube.com" },
+        { "id": "linkedin", "name": "لينكد إن", "url": "https://linkedin.com" },
+        { "id": "telegram", "name": "تليجرام", "url": "https://t.me" },
+        { "id": "whatsapp", "name": "واتساب", "url": "https://wa.me" },
+        { "id": "playstore", "name": "متجر بلاي", "url": "https://play.google.com" },
+        { "id": "appstore", "name": "آب ستور", "url": "https://apple.com/app-store" }
+    ]
+}

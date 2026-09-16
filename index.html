@@ -5,63 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أفق | منصة المشاريع الإسلامية الريادية</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
+        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; display: flex; flex-direction: column; min-height: 100vh; }
         .modal-active { overflow: hidden; }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .timeline-border { border-right: 2px solid #e5e7eb; }
     </style>
 </head>
 <body class="text-gray-800 antialiased selection:bg-emerald-200">
 
     <!-- شريط التنقل -->
     <nav class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-40">
-        <div class="container mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
+        <div class="container mx-auto px-4 md:px-8 py-4 flex justify-between items-center max-w-6xl">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-md">أ</div>
+                <div class="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-sm">أ</div>
                 <h1 class="text-2xl font-extrabold text-gray-800 tracking-tight">أُفُق</h1>
             </div>
             <div>
-                <button onclick="toggleModal('supportModal')" class="bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-600 hover:text-white px-5 py-2 rounded-lg font-bold transition duration-300 shadow-sm">
+                <button onclick="toggleModal('supportModal')" class="text-emerald-700 bg-emerald-50 hover:bg-emerald-600 hover:text-white px-5 py-2 rounded-lg font-bold transition duration-300">
                     ☕ ادعم المطور
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- القسم التعريفي -->
-    <header class="container mx-auto px-4 md:px-8 py-12 md:py-16 text-center max-w-3xl">
-        <span class="text-emerald-600 font-bold tracking-wider text-sm bg-emerald-50 px-3 py-1 rounded-full mb-4 inline-block">ترقبونا قريباً</span>
-        <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
-            نبتكر أدوات تقنية <br> <span class="text-emerald-600">لأثر يمتد</span>
-        </h2>
-        <p class="text-lg text-gray-600 leading-relaxed mb-4">
-            "أفق" هي منصة غير ربحية تحتضن المشاريع الإسلامية الريادية والتطبيقات الهادفة.
-        </p>
-    </header>
+    <!-- المحتوى الرئيسي -->
+    <main class="flex-grow">
+        <!-- القسم التعريفي (البطل) -->
+        <header class="container mx-auto px-4 md:px-8 py-16 md:py-20 text-center max-w-3xl">
+            <span class="text-emerald-600 font-bold text-xs bg-emerald-50 px-3 py-1 rounded-full mb-4 inline-block">ترقبونا قريباً</span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
+                نبتكر أدوات تقنية <br> <span class="text-emerald-600">لأثر يمتد</span>
+            </h2>
+            <p class="text-lg text-gray-600 leading-relaxed">
+                "أفق" منصة غير ربحية تحتضن المشاريع الإسلامية الريادية والتطبيقات الهادفة.
+                نعتمد على المصادر المفتوحة والذكاء الاصطناعي لتقديم حلول مجانية واحترافية.
+            </p>
+        </header>
 
-    <!-- قسم لوحة الأخبار (Carousel) -->
-    <section id="news-section" class="container mx-auto px-4 md:px-8 mb-12 hidden">
-        <div class="relative w-full max-w-5xl mx-auto bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-            <div id="slides-container" class="flex transition-transform duration-500 ease-out w-full">
-                <!-- سيتم حقن الأخبار هنا -->
+        <!-- قسم المشاريع -->
+        <section class="container mx-auto px-4 md:px-8 py-8 max-w-6xl">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-2 h-8 bg-emerald-500 rounded-full"></div>
+                <h3 class="text-2xl font-bold text-gray-800">مشاريع أفق</h3>
             </div>
-            <!-- نقاط التقليب -->
-            <div id="dots-container" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
-                <!-- سيتم حقن النقاط هنا -->
+            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="col-span-full text-center text-gray-400 py-10" id="projects-loading">
+                    <span class="animate-pulse font-bold">جاري جلب المشاريع...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم آخر الأخبار (شريط زمني احترافي) -->
+        <section class="bg-white border-y border-gray-100 py-12 mt-12">
+            <div class="container mx-auto px-4 md:px-8 max-w-4xl">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-2 h-8 bg-indigo-500 rounded-full"></div>
+                    <h3 class="text-2xl font-bold text-gray-800">آخر التحديثات والأخبار</h3>
+                </div>
+                
+                <div id="news-container" class="pr-4 timeline-border space-y-8">
+                    <div class="text-center text-gray-400 py-6" id="news-loading">
+                        <span class="animate-pulse font-bold">جاري جلب الأخبار...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- التذييل (Footer) الاحترافي -->
+    <footer class="bg-gray-900 text-gray-300 py-12 mt-auto border-t-4 border-emerald-600">
+        <div class="container mx-auto px-4 md:px-8 max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- عن المنصة -->
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 bg-emerald-600 rounded flex items-center justify-center text-white font-bold">أ</div>
+                    <h4 class="text-xl font-bold text-white">منصة أُفُق</h4>
+                </div>
+                <p class="text-sm text-gray-400 leading-relaxed mb-4">
+                    مبادرة ريادية تهدف إلى إثراء المحتوى والتطبيقات الإسلامية الهادفة بأدوات تقنية حديثة ومفتوحة المصدر، لخدمة المسلمين حول العالم.
+                </p>
+            </div>
+            
+            <!-- روابط سريعة -->
+            <div>
+                <h4 class="text-lg font-bold text-white mb-4">روابط سريعة</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-emerald-400 transition">من نحن</a></li>
+                    <li><a href="#" class="hover:text-emerald-400 transition">المشاريع المفتوحة</a></li>
+                    <li><a href="#" class="hover:text-emerald-400 transition">سياسة الخصوصية</a></li>
+                    <li><a href="#" onclick="toggleModal('supportModal')" class="hover:text-emerald-400 transition">دعم المطور</a></li>
+                </ul>
+            </div>
+
+            <!-- التواصل -->
+            <div>
+                <h4 class="text-lg font-bold text-white mb-4">تواصل معنا</h4>
+                <p class="text-sm text-gray-400 mb-4">اشترك في قناتنا على تليجرام ليصلك كل جديد حول مشاريعنا وتحديثاتنا المستمرة.</p>
+                <div class="flex gap-3">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition">
+                        <!-- أيقونة تليجرام -->
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.892-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition">
+                        <!-- أيقونة جيت هاب -->
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                </div>
             </div>
         </div>
-    </section>
-
-    <!-- قسم المشاريع -->
-    <section class="container mx-auto px-4 md:px-8 py-8 mb-12">
-        <h3 class="text-2xl font-bold mb-8 text-gray-800 border-r-4 border-emerald-500 pr-3">مشاريع أفق الحالية</h3>
-        <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="col-span-full text-center text-gray-400 py-10" id="loading-msg">
-                <span class="animate-pulse font-bold">جاري جلب البيانات...</span>
-            </div>
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-500">
+            &copy; 2026 منصة أُفُق. جميع الحقوق محفوظة.
         </div>
-    </section>
+    </footer>
 
     <!-- نافذة الدعم المنبثقة -->
     <div id="supportModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden z-50 flex items-center justify-center transition-opacity opacity-0">
@@ -71,175 +127,16 @@
                 <button onclick="toggleModal('supportModal')" class="text-gray-400 hover:text-red-500 text-2xl font-bold">&times;</button>
             </div>
             <p class="text-gray-600 text-sm mb-6 leading-relaxed">
-                هذه المنصة مبنية بجهد فردي (إحسان). دعمك يساهم في تغطية الخوادم وتطوير الأدوات.
+                هذه المنصة مبنية بجهد فردي. دعمك يساهم في تغطية تكاليف الخوادم وتطوير المزيد من الأدوات.
             </p>
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 text-center mb-6">
                 <a href="#" class="text-emerald-600 font-bold hover:underline">اضغط هنا للانتقال لصفحة الدعم</a>
             </div>
-            <button onclick="toggleModal('supportModal')" class="w-full bg-gray-800 text-white py-3 rounded-lg font-bold hover:bg-gray-900 transition shadow-md">إغلاق</button>
+            <button onclick="toggleModal('supportModal')" class="w-full bg-gray-800 text-white py-3 rounded-lg font-bold hover:bg-gray-900 transition shadow-sm">إغلاق</button>
         </div>
     </div>
 
-    <!-- السكربتات -->
-    <script>
-        let currentSlide = 0;
-        let slideInterval;
-        let newsDataArray = [];
-
-        function toggleModal(modalID) {
-            const modal = document.getElementById(modalID);
-            const body = document.body;
-            if (modal.classList.contains('hidden')) {
-                modal.classList.remove('hidden');
-                setTimeout(() => { modal.classList.remove('opacity-0'); modal.firstElementChild.classList.remove('scale-95'); }, 10);
-                body.classList.add('modal-active');
-            } else {
-                modal.classList.add('opacity-0');
-                modal.firstElementChild.classList.add('scale-95');
-                setTimeout(() => { modal.classList.add('hidden'); }, 300);
-                body.classList.remove('modal-active');
-            }
-        }
-
-        async function fetchAllData() {
-            const projectsContainer = document.getElementById('projects-container');
-            const loadingMsg = document.getElementById('loading-msg');
-            const cacheBuster = new Date().getTime();
-
-            try {
-                // جلب الأخبار من news.json
-                const newsResponse = await fetch(`https://ufug.org/news.json?nocache=${cacheBuster}`);
-                if (newsResponse.ok) {
-                    const newsData = await newsResponse.json();
-                    if (newsData.news && Array.isArray(newsData.news) && newsData.news.length > 0) {
-                        renderNews(newsData.news);
-                    }
-                } else {
-                    console.error("لم يتم العثور على ملف الأخبار أو هناك خطأ في الرابط.");
-                }
-
-                // جلب المشاريع من projects.json (افترضت أنه projects.json بناءً على المحادثة)
-                const projectsResponse = await fetch(`https://ufug.org/projects.json?nocache=${cacheBuster}`);
-                
-                loadingMsg.style.display = 'none'; // إخفاء رسالة التحميل
-
-                if (projectsResponse.ok) {
-                    const projectsData = await projectsResponse.json();
-                    if (projectsData.projects && Array.isArray(projectsData.projects) && projectsData.projects.length > 0) {
-                        renderProjects(projectsData.projects, projectsContainer);
-                    } else {
-                        projectsContainer.innerHTML = '<div class="col-span-full text-center text-gray-500 py-10 font-bold">لم يتم العثور على مشاريع.</div>';
-                    }
-                } else {
-                    projectsContainer.innerHTML = '<div class="col-span-full text-center text-red-500 py-10 font-bold">حدث خطأ أثناء جلب المشاريع.</div>';
-                }
-
-            } catch (error) {
-                loadingMsg.innerHTML = '<span class="text-red-500 font-bold">عذراً، حدث خطأ عام أثناء تحميل البيانات.</span>';
-                console.error("تفاصيل الخطأ:", error);
-            }
-        }
-
-        function renderNews(news) {
-            newsDataArray = news;
-            document.getElementById('news-section').classList.remove('hidden');
-            const slidesContainer = document.getElementById('slides-container');
-            const dotsContainer = document.getElementById('dots-container');
-            
-            slidesContainer.innerHTML = '';
-            dotsContainer.innerHTML = '';
-
-            news.forEach((item, index) => {
-                let imgSrc = item.image ? `Photos/${item.image}` : 'https://via.placeholder.com/600x400?text=أفق';
-                
-                slidesContainer.innerHTML += `
-                    <div class="w-full flex-shrink-0 flex flex-col md:flex-row bg-emerald-50 relative group">
-                        <div class="p-8 md:p-12 md:w-2/3 flex flex-col justify-center">
-                            <span class="text-xs text-emerald-600 font-black mb-3 bg-emerald-100 px-3 py-1 rounded-full w-max tracking-wide">${item.date}</span>
-                            <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-4 leading-tight">${item.title}</h3>
-                            <p class="text-gray-600 mb-6 leading-relaxed text-sm md:text-base">${item.description}</p>
-                            ${item.link ? `<a href="${item.link}" target="_blank" class="inline-block bg-emerald-600 text-white px-6 py-2.5 rounded-lg font-bold w-max hover:bg-emerald-700 transition shadow-md">اكتشف المزيد</a>` : ''}
-                        </div>
-                        <div class="md:w-1/3 min-h-[250px] bg-cover bg-center border-r-4 border-emerald-500" style="background-image: url('${imgSrc}')"></div>
-                    </div>
-                `;
-
-                const dot = document.createElement('button');
-                dot.className = `w-3 h-3 rounded-full transition-all duration-300 news-dot ${index === 0 ? 'bg-emerald-600 w-6' : 'bg-gray-300'}`;
-                dot.onclick = () => goToSlide(index);
-                dotsContainer.appendChild(dot);
-            });
-
-            startAutoSlide();
-        }
-
-        function goToSlide(index) {
-            currentSlide = index;
-            updateCarousel();
-            resetAutoSlide();
-        }
-
-        function updateCarousel() {
-            const slides = document.getElementById('slides-container');
-            slides.style.transform = `translateX(${currentSlide * 100}%)`;
-            
-            document.querySelectorAll('.news-dot').forEach((dot, i) => {
-                dot.classList.toggle('bg-emerald-600', i === currentSlide);
-                dot.classList.toggle('w-6', i === currentSlide);
-                dot.classList.toggle('bg-gray-300', i !== currentSlide);
-                dot.classList.toggle('w-3', i !== currentSlide);
-            });
-        }
-
-        function startAutoSlide() {
-            slideInterval = setInterval(() => {
-                currentSlide = (currentSlide + 1) % newsDataArray.length;
-                updateCarousel();
-            }, 6000);
-        }
-
-        function resetAutoSlide() {
-            clearInterval(slideInterval);
-            startAutoSlide();
-        }
-
-        function renderProjects(projects, container) {
-            projects.forEach(proj => {
-                let statusColor = proj.status === 'قريباً' ? 'bg-amber-100 text-amber-700' : 
-                                  proj.status === 'نسخة تجريبية' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-800';
-                
-                let tagsHtml = '';
-                if(proj.tags && Array.isArray(proj.tags)) {
-                    tagsHtml = '<div class="mt-4 flex flex-wrap gap-2">' + proj.tags.map(tag => `<span class="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-1 rounded-md border border-gray-200">${tag}</span>`).join('') + '</div>';
-                }
-
-                let imgSrc = proj.image ? `Photos/${proj.image}` : 'https://via.placeholder.com/80?text=أفق';
-
-                container.innerHTML += `
-                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition duration-300 flex flex-col justify-between h-full relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-emerald-600"></div>
-                        <div>
-                            <div class="flex items-start justify-between mb-4 mt-2">
-                                <div class="flex items-center gap-3 w-full">
-                                    <img src="${imgSrc}" alt="${proj.title}" onerror="this.src='https://via.placeholder.com/80?text=أفق'" class="w-14 h-14 rounded-xl object-cover shadow-sm border border-gray-100 flex-shrink-0">
-                                    <div class="flex-grow">
-                                        <h4 class="text-lg font-bold text-gray-800 mb-1 leading-tight">${proj.title}</h4>
-                                        <span class="inline-block text-[10px] font-bold ${statusColor} px-2 py-0.5 rounded-full">${proj.status}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="text-gray-600 text-sm leading-relaxed mb-4">${proj.description}</p>
-                        </div>
-                        <div>
-                            ${tagsHtml}
-                            ${proj.link ? `<a href="${proj.link}" target="_blank" class="mt-5 block text-center bg-gray-50 hover:bg-emerald-600 hover:text-white text-gray-700 font-bold py-2.5 rounded-lg transition border border-gray-200 hover:border-transparent text-sm shadow-sm">تصفح المشروع &larr;</a>` : ''}
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        window.onload = fetchAllData;
-    </script>
+    <!-- ربط ملف الجافاسكريبت -->
+    <script src="main.js"></script>
 </body>
 </html>

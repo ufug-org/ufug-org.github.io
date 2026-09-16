@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أفق | لوحة التحكم السريعة</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Cairo', 'sans-serif'] }, colors: { primary: '#0ea5e9', dark: '#0f172a' } } } }
+    </script>
+    <style> body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; } </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex items-center justify-center p-4">
+
+    <!-- شاشة تسجيل الدخول -->
+    <div id="login-screen" class="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 text-center">
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-dark text-white flex items-center justify-center text-3xl font-bold mb-6">أ</div>
+        <h2 class="text-2xl font-bold mb-2">منطقة الإدارة</h2>
+        <p class="text-slate-500 mb-6 text-sm">أدخل كلمة المرور للوصول إلى محرر البيانات</p>
+        
+        <input type="password" id="password-input" placeholder="كلمة المرور..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary mb-4 text-center" dir="ltr">
+        
+        <button onclick="checkPassword()" class="w-full py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-colors">
+            دخول
+        </button>
+        <p id="error-msg" class="text-red-500 text-sm mt-3 hidden">كلمة المرور غير صحيحة!</p>
+    </div>
+
+    <!-- شاشة لوحة التحكم -->
+    <div id="dashboard-screen" class="w-full max-w-4xl bg-white rounded-3xl shadow-xl p-6 md:p-8 hidden flex-col h-[90vh]">
+        <div class="flex justify-between items-center mb-6 border-b pb-4">
+            <h2 class="text-2xl font-bold text-dark flex items-center gap-2">
+                <span>⚙️</span> محرر قاعدة البيانات (projects.json)
+            </h2>
+            <button onclick="location.reload()" class="text-slate-500 hover:text-red-500 text-sm font-bold">تسجيل خروج</button>
+        </div>
+        
+        <div class="flex-grow flex flex-col gap-4">
+            <p class="text-sm text-slate-600">
+                قم بتعديل كود الـ JSON بالأسفل. عند الانتهاء، اضغط على زر التحميل، ثم قم برفع الملف الجديد إلى مستودع GitHub الخاص بك ليتم تحديث الموقع وكافة التطبيقات فوراً.
+            </p>
+            
+            <textarea id="json-editor" class="w-full flex-grow p-4 bg-slate-800 text-green-400 font-mono text-sm rounded-xl border-none focus:outline-none focus:ring-2 focus:ring-primary resize-none" dir="ltr" spellcheck="false"></textarea>
+        </div>
+        
+        <div class="mt-6 flex justify-end gap-3">
+            <button onclick="formatJson()" class="px-6 py-3 bg-slate-200 text-slate-700 rounded-xl font-bold hover:bg-slate-300 transition-colors">
+                ترتيب الكود (Format)
+            </button>
+            <button onclick="downloadJson()" class="px-6 py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/30 flex items-center gap-2">
+                <span>📥</span> تحميل الملف الجديد
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // كلمة المرور الوهمية البسيطة (يمكنك تغييرها)
+        const SECRET_PASSWORD = "sadeed";
+
+        function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            if (input === SECRET_PASSWORD) {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('dashboard-screen').classList.remove('hidden');
+                document.getElementById('dashboard-screen').classList.add('flex');
+                loadCurrentJson();
+            } else {
+                document.getElementById('error-msg').classList.remove('hidden');
+            }
+        }
+
+        // جلب البيانات الحالية لوضعها في المحرر
+        async function loadCurrentJson() {
+            try {
+                const response = await fetch('projects.json?t=' + new Date().getTime());
+                if(response.ok) {
+                    const data = await response.json();
+                    document.getElementById('json-editor').value = JSON.stringify(data, null, 4);
+                }
+            } catch (error) {
+                document.getElementById('json-editor').value = '[\n    // ألصق الكود هنا أو حدث خطأ في جلبه\n]';
+            }
+        }
+
+        // ترتيب الكود لتسهيل القراءة
+        function formatJson() {
+            try {
+                const editor = document.getElementById('json-editor');
+                const parsed = JSON.parse(editor.value);
+                editor.value = JSON.stringify(parsed, null, 4);
+            } catch (e) {
+                alert('هناك خطأ في صياغة الكود (JSON غير صالح). يرجى مراجعة الأقواس والفواصل.');
+            }
+        }
+
+        // إنشاء ملف وتنزيله
+        function downloadJson() {
+            try {
+                const data = document.getElementById('json-editor').value;
+                // التحقق من صحة الكود قبل التحميل
+                JSON.parse(data); 
+                
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'projects.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (e) {
+                alert('لا يمكن تحميل الملف! يوجد خطأ في صيغة الـ JSON.');
+            }
+        }
+
+        // دعم الضغط على زر Enter لتسجيل الدخول
+        document.getElementById('password-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkPassword();
+        });
+    </script>
+</body>
+</html>

@@ -3,123 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أفق | لوحة التحكم السريعة</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>أفق - المحرك الذكي</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Cairo', 'sans-serif'] }, colors: { primary: '#0ea5e9', dark: '#0f172a' } } } }
-    </script>
-    <style> body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; } </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; }
+    </style>
 </head>
-<body class="text-slate-800 antialiased min-h-screen flex items-center justify-center p-4">
+<body class="text-gray-800">
 
     <!-- شاشة تسجيل الدخول -->
-    <div id="login-screen" class="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 text-center">
-        <div class="w-16 h-16 mx-auto rounded-2xl bg-dark text-white flex items-center justify-center text-3xl font-bold mb-6">أ</div>
-        <h2 class="text-2xl font-bold mb-2">منطقة الإدارة</h2>
-        <p class="text-slate-500 mb-6 text-sm">أدخل كلمة المرور للوصول إلى محرر البيانات</p>
-        
-        <input type="password" id="password-input" placeholder="كلمة المرور..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary mb-4 text-center" dir="ltr">
-        
-        <button onclick="checkPassword()" class="w-full py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-colors">
-            دخول
-        </button>
-        <p id="error-msg" class="text-red-500 text-sm mt-3 hidden">كلمة المرور غير صحيحة!</p>
+    <div id="loginSection" class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-2xl shadow-xl w-96 text-center border-t-4 border-emerald-500">
+            <h2 class="text-3xl font-extrabold mb-6 text-gray-800">بوابة <span class="text-emerald-600">أفق</span></h2>
+            <p class="text-sm text-gray-500 mb-4">المحرك الذكي لإدارة الشبكة</p>
+            <input type="password" id="passwordInput" class="w-full p-3 border rounded-lg mb-4 text-center focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="كلمة المرور">
+            <button onclick="checkPassword()" class="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-700 transition font-bold shadow-lg">تسجيل الدخول</button>
+            <p id="errorMsg" class="text-red-500 mt-3 text-sm hidden font-bold">كلمة المرور غير صحيحة، حاول مجدداً.</p>
+        </div>
     </div>
 
-    <!-- شاشة لوحة التحكم -->
-    <div id="dashboard-screen" class="w-full max-w-4xl bg-white rounded-3xl shadow-xl p-6 md:p-8 hidden flex-col h-[90vh]">
-        <div class="flex justify-between items-center mb-6 border-b pb-4">
-            <h2 class="text-2xl font-bold text-dark flex items-center gap-2">
-                <span>⚙️</span> محرر قاعدة البيانات (projects.json)
-            </h2>
-            <button onclick="location.reload()" class="text-slate-500 hover:text-red-500 text-sm font-bold">تسجيل خروج</button>
-        </div>
-        
-        <div class="flex-grow flex flex-col gap-4">
-            <p class="text-sm text-slate-600">
-                قم بتعديل كود الـ JSON بالأسفل. عند الانتهاء، اضغط على زر التحميل، ثم قم برفع الملف الجديد إلى مستودع GitHub الخاص بك ليتم تحديث الموقع وكافة التطبيقات فوراً.
-            </p>
-            
-            <textarea id="json-editor" class="w-full flex-grow p-4 bg-slate-800 text-green-400 font-mono text-sm rounded-xl border-none focus:outline-none focus:ring-2 focus:ring-primary resize-none" dir="ltr" spellcheck="false"></textarea>
-        </div>
-        
-        <div class="mt-6 flex justify-end gap-3">
-            <button onclick="formatJson()" class="px-6 py-3 bg-slate-200 text-slate-700 rounded-xl font-bold hover:bg-slate-300 transition-colors">
-                ترتيب الكود (Format)
+    <!-- لوحة التحكم الذكية -->
+    <div id="dashboardSection" class="hidden container mx-auto p-4 md:p-8 max-w-6xl">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">إدارة مشاريع أفق</h1>
+                <p class="text-gray-500 text-sm mt-1">أضف مشاريعك هنا، وقم بتحميل الملف لتحديث الشبكة بالكامل.</p>
+            </div>
+            <button onclick="downloadJSON()" class="mt-4 md:mt-0 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition font-bold flex items-center gap-2">
+                <span>⬇️</span> تحميل projects.json الجديد
             </button>
-            <button onclick="downloadJson()" class="px-6 py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/30 flex items-center gap-2">
-                <span>📥</span> تحميل الملف الجديد
-            </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- نموذج إضافة مشروع -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-fit">
+                <h2 class="text-lg font-bold mb-4 text-emerald-700 border-b pb-2">➕ إضافة تطبيق جديد</h2>
+                <form id="projectForm" onsubmit="addProject(event)">
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">اسم التطبيق</label>
+                        <input type="text" id="pTitle" required class="w-full p-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">وصف قصير</label>
+                        <textarea id="pDesc" required rows="3" class="w-full p-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">حالة التطبيق</label>
+                        <select id="pStatus" class="w-full p-2 border rounded-lg bg-gray-50 focus:outline-none">
+                            <option value="متوفر الآن">متوفر الآن</option>
+                            <option value="قريباً">قريباً</option>
+                            <option value="نسخة تجريبية">نسخة تجريبية</option>
+                        </select>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">رابط التحميل (إن وجد)</label>
+                        <input type="url" id="pLink" placeholder="https://..." class="w-full p-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-left" dir="ltr">
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 text-white py-2 rounded-lg shadow hover:bg-emerald-700 transition font-bold">حفظ التطبيق</button>
+                </form>
+            </div>
+
+            <!-- قائمة المشاريع الحالية -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <h2 class="text-lg font-bold mb-4 text-emerald-700 border-b pb-2">📂 قاعدة بيانات تطبيقاتك</h2>
+                <div id="projectsList" class="space-y-3">
+                    <!-- سيتم حقن المشاريع هنا برمجياً -->
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // كلمة المرور الوهمية البسيطة (يمكنك تغييرها)
-        const SECRET_PASSWORD = "sadeed";
+        let dataStore = { projects: [] };
 
+        // 1. التحقق من كلمة المرور (كلمة المرور: sadeed)
         function checkPassword() {
-            const input = document.getElementById('password-input').value;
-            if (input === SECRET_PASSWORD) {
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('dashboard-screen').classList.remove('hidden');
-                document.getElementById('dashboard-screen').classList.add('flex');
-                loadCurrentJson();
+            const pass = document.getElementById('passwordInput').value;
+            if(pass === 'sadeed') {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('dashboardSection').classList.remove('hidden');
+                fetchExistingData();
             } else {
-                document.getElementById('error-msg').classList.remove('hidden');
+                document.getElementById('errorMsg').classList.remove('hidden');
             }
         }
 
-        // جلب البيانات الحالية لوضعها في المحرر
-        async function loadCurrentJson() {
+        // 2. جلب الملف الحالي
+        async function fetchExistingData() {
             try {
-                const response = await fetch('projects.json?t=' + new Date().getTime());
+                // يحاول قراءة الملف الموجود لتعديله
+                const response = await fetch('projects.json');
                 if(response.ok) {
-                    const data = await response.json();
-                    document.getElementById('json-editor').value = JSON.stringify(data, null, 4);
+                    dataStore = await response.json();
                 }
             } catch (error) {
-                document.getElementById('json-editor').value = '[\n    // ألصق الكود هنا أو حدث خطأ في جلبه\n]';
+                console.log('لم يتم العثور على ملف مسبق، سنبدأ بقائمة فارغة.');
             }
+            renderList();
         }
 
-        // ترتيب الكود لتسهيل القراءة
-        function formatJson() {
-            try {
-                const editor = document.getElementById('json-editor');
-                const parsed = JSON.parse(editor.value);
-                editor.value = JSON.stringify(parsed, null, 4);
-            } catch (e) {
-                alert('هناك خطأ في صياغة الكود (JSON غير صالح). يرجى مراجعة الأقواس والفواصل.');
+        // 3. رسم واجهة المشاريع
+        function renderList() {
+            const list = document.getElementById('projectsList');
+            list.innerHTML = '';
+            
+            if(dataStore.projects.length === 0) {
+                list.innerHTML = '<p class="text-gray-400 text-center py-8">لا توجد تطبيقات مضافة بعد.</p>';
+                return;
             }
-        }
 
-        // إنشاء ملف وتنزيله
-        function downloadJson() {
-            try {
-                const data = document.getElementById('json-editor').value;
-                // التحقق من صحة الكود قبل التحميل
-                JSON.parse(data); 
+            dataStore.projects.forEach((proj, index) => {
+                let statusColor = proj.status === 'قريباً' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-800';
                 
-                const blob = new Blob([data], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'projects.json';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            } catch (e) {
-                alert('لا يمكن تحميل الملف! يوجد خطأ في صيغة الـ JSON.');
+                list.innerHTML += `
+                    <div class="flex justify-between items-center p-4 border rounded-xl hover:shadow-md transition bg-gray-50">
+                        <div class="pl-4">
+                            <h3 class="font-bold text-gray-800 text-lg mb-1">
+                                ${proj.title} 
+                                <span class="text-xs ${statusColor} px-2 py-1 rounded-full mr-2 font-normal">${proj.status}</span>
+                            </h3>
+                            <p class="text-sm text-gray-600 line-clamp-2">${proj.description}</p>
+                            ${proj.link ? `<a href="${proj.link}" target="_blank" class="text-xs text-blue-500 hover:underline mt-2 inline-block">🔗 رابط التطبيق</a>` : ''}
+                        </div>
+                        <button onclick="deleteProject(${index})" class="text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-2 rounded-lg transition text-sm font-bold flex-shrink-0">
+                            حذف
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        // 4. إضافة مشروع جديد
+        function addProject(e) {
+            e.preventDefault();
+            const newProject = {
+                title: document.getElementById('pTitle').value,
+                description: document.getElementById('pDesc').value,
+                status: document.getElementById('pStatus').value,
+                link: document.getElementById('pLink').value
+            };
+            
+            // إضافة في بداية القائمة ليظهر كأول عنصر
+            dataStore.projects.unshift(newProject);
+            renderList();
+            document.getElementById('projectForm').reset();
+        }
+
+        // 5. حذف مشروع
+        function deleteProject(index) {
+            if(confirm('هل أنت متأكد من حذف هذا التطبيق؟')) {
+                dataStore.projects.splice(index, 1);
+                renderList();
             }
         }
 
-        // دعم الضغط على زر Enter لتسجيل الدخول
-        document.getElementById('password-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') checkPassword();
-        });
+        // 6. تحميل الملف الجديد
+        function downloadJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataStore, null, 4));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "projects.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
     </script>
 </body>
 </html>

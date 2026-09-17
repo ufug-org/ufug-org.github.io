@@ -1,28 +1,111 @@
 {
     "projects": [
         {
-            "title": "تطبيق المؤذن العالمي",
-            "description": "تطبيق سطح مكتب خفيف ومفتوح المصدر يعرض أوقات الصلاة ويطلق الأذان تلقائياً، مصمم خصيصاً لأجهزة ويندوز.",
-            "status": "قريباً",
-            "link": "",
+            "id": "muazzin_1",
             "image": "muazzin.png",
-            "tags": [
-                "Windows",
-                "مجاني 100%",
-                "مفتوح المصدر"
-            ]
-        },
-        {
-            "title": "تطبيق بصيرة",
-            "description": "تطبيق يعلم المسلمين العجم اللغة العربية بالأسلوب الانغماسي التفاعلي، تم بناؤه بجهد يفوق الألف ساعة.",
-            "status": "نسخة تجريبية",
-            "link": "",
-            "image": "basira.png",
-            "tags": [
-                "Android",
-                "Web",
-                "تعليم اللغات"
-            ]
+            "link": "https://ufug.org",
+            "ar": {
+                "title": "المؤذن العالمي",
+                "description": "تطبيق سطح مكتب مجاني ومفتوح المصدر...",
+                "status": "قريباً",
+                "tags": ["ويندوز", "مجاني", "مفتوح المصدر"]
+            },
+            "bn": {
+                "title": "গ্লোবাল মুয়াজ্জিন",
+                "description": "বিনামূল্যে এবং ওপেন-সোর্স ডেস্কটপ অ্যাপ্লিকেশন...",
+                "status": "শীঘ্রই আসছে",
+                "tags": ["উইন্ডোজ", "বিনামূল্যে", "ওপেন সোর্স"]
+            },
+            "en": {
+                "title": "Global Muazzin",
+                "description": "Free and open-source desktop application...",
+                "status": "Coming Soon",
+                "tags": ["Windows", "Free", "Open Source"]
+            },
+            "es": {
+                "title": "Muazzin Global",
+                "description": "Aplicación de escritorio gratuita y de código abierto...",
+                "status": "Próximamente",
+                "tags": ["Windows", "Gratis", "Código abierto"]
+            },
+            "fa": {
+                "title": "موذن جهانی",
+                "description": "اپلیکیشن دسکتاپ رایگان و متن‌باز...",
+                "status": "به زودی",
+                "tags": ["ویندوز", "رایگان", "متن‌باز"]
+            },
+            "fr": {
+                "title": "Global Muazzin",
+                "description": "Application de bureau gratuite et open-source...",
+                "status": "Bientôt disponible",
+                "tags": ["Windows", "Gratuit", "Open source"]
+            },
+            "ha": {
+                "title": "Global Muazzin",
+                "description": "Manhajar tebur kyauta kuma mai buɗe ido...",
+                "status": "Na Zuwa Nan Bada Jimawa Ba",
+                "tags": ["Windows", "Kyauta", "Mai buɗe ido"]
+            },
+            "hi": {
+                "title": "ग्लोबल मुअज्जिन",
+                "description": "मुफ्त और ओपन-सोर्स डेस्कटॉप एप्लिकेशन...",
+                "status": "जल्द आ रहा है",
+                "tags": ["विंडोज", "मुफ्त", "ओपन सोर्स"]
+            },
+            "id": {
+                "title": "Global Muazzin",
+                "description": "Aplikasi desktop gratis dan sumber terbuka...",
+                "status": "Segera Hadir",
+                "tags": ["Windows", "Gratis", "Sumber Terbuka"]
+            },
+            "it": {
+                "title": "Global Muazzin",
+                "description": "Applicazione desktop gratuita e open source...",
+                "status": "Prossimamente",
+                "tags": ["Windows", "Gratuito", "Open Source"]
+            },
+            "ps": {
+                "title": "ګلوبل مؤذن",
+                "description": "وړیا او خلاصې سرچینې ډیسټاپ غوښتنلیک...",
+                "status": "ډیر ژر",
+                "tags": ["وینډوز", "وړیا", "خلاصې سرچینې"]
+            },
+            "pt": {
+                "title": "Global Muazzin",
+                "description": "Aplicativo de desktop gratuito e de código aberto...",
+                "status": "Em breve",
+                "tags": ["Windows", "Gratuito", "Código aberto"]
+            },
+            "ru": {
+                "title": "Глобальный Муэдзин",
+                "description": "Бесплатное настольное приложение с открытым исходным кодом...",
+                "status": "Скоро",
+                "tags": ["Windows", "Бесплатно", "Открытый исходный код"]
+            },
+            "sw": {
+                "title": "Global Muazzin",
+                "description": "Programu ya kompyuta ya mezani ya bure na huria...",
+                "status": "Inakuja Hivi Karibuni",
+                "tags": ["Windows", "Bure", "Chanzo Huria"]
+            },
+            "tr": {
+                "title": "Küresel Müezzin",
+                "description": "Ücretsiz ve açık kaynaklı masaüstü uygulaması...",
+                "status": "Yakında",
+                "tags": ["Windows", "Ücretsiz", "Açık Kaynak"]
+            },
+            "ur": {
+                "title": "گلوبل مؤذن",
+                "description": "مفت اور اوپن سورس ڈیسک ٹاپ ایپلی کیشن...",
+                "status": "جلد آ رہا ہے",
+                "tags": ["ونڈوز", "مفت", "اوپن سورس"]
+            },
+            "zh": {
+                "title": "全球 Muazzin",
+                "description": "免费且开源的桌面应用程序...",
+                "status": "即将推出",
+                "tags": ["Windows", "免费", "开源"]
+            }
         }
     ]
 }

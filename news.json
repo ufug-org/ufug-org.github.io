@@ -2,27 +2,225 @@
     "news": [
         {
             "id": 1,
-            "title": "إطلاق النسخة التجريبية من تطبيق بصيرة",
-            "description": "نفخر في منصة أفق بإطلاق النسخة التجريبية لتطبيق بصيرة. استمتع بتجربة الانغماس اللغوي الآن.",
             "image": "basira.png",
             "link": "https://ufug.org",
-            "date": "2026-09-20"
+            "date": "2026-09-20",
+            "ar": {
+                "title": "إطلاق النسخة التجريبية من تطبيق بصيرة",
+                "description": "نفخر في منصة أفق بإطلاق النسخة التجريبية لتطبيق بصيرة. استمتع بتجربة الانغماس اللغوي الآن."
+            },
+            "bn": {
+                "title": "বাসিরা অ্যাপ বিটা সংস্করণের উন্মোচন",
+                "description": "উফুগ প্ল্যাটফর্মে বাসিরা অ্যাপের বিটা সংস্করণ চালু করতে পেরে আমরা গর্বিত। এখনই ভাষা নিমজ্জনের অভিজ্ঞতা উপভোগ করুন।"
+            },
+            "en": {
+                "title": "Launch of Basira App Beta Version",
+                "description": "We are proud at Ufug to launch the beta version of the Basira app. Enjoy the language immersion experience now."
+            },
+            "es": {
+                "title": "Lanzamiento de la versión beta de la aplicación Basira",
+                "description": "En Ufug estamos orgullosos de lanzar la versión beta de la aplicación Basira. Disfrute de la experiencia de inmersión lingüística ahora."
+            },
+            "fa": {
+                "title": "راه‌اندازی نسخه آزمایشی اپلیکیشن بصیره",
+                "description": "ما در پلتفرم افق مفتخریم که نسخه آزمایشی اپلیکیشن بصیره را راه‌اندازی می‌کنیم. اکنون از تجربه غوطه‌وری در زبان لذت ببرید."
+            },
+            "fr": {
+                "title": "Lancement de la version bêta de l'application Basira",
+                "description": "Chez Ufug, nous sommes fiers de lancer la version bêta de l'application Basira. Profitez dès maintenant de l'expérience d'immersion linguistique."
+            },
+            "ha": {
+                "title": "Kaddamar da Fasalin Gwaji na Manhajar Basira",
+                "description": "Muna alfahari a Ufug don ƙaddamar da tsarin gwaji na manhajar Basira. Ji daɗin gogewar nutsewa cikin harshe yanzu."
+            },
+            "hi": {
+                "title": "बसीरा ऐप के बीटा संस्करण का लॉन्च",
+                "description": "हम उफुग में बसीरा ऐप का बीटा संस्करण लॉन्च करने पर गर्व महसूस कर रहे हैं। अभी भाषा विसर्जन अनुभव का आनंद लें।"
+            },
+            "id": {
+                "title": "Peluncuran Versi Beta Aplikasi Basira",
+                "description": "Kami di platform Ufug bangga meluncurkan versi beta aplikasi Basira. Nikmati pengalaman perendaman bahasa sekarang juga."
+            },
+            "it": {
+                "title": "Lancio della versione beta dell'app Basira",
+                "description": "Noi di Ufug siamo orgogliosi di lanciare la versione beta dell'app Basira. Goditi subito l'esperienza di immersione linguistica."
+            },
+            "ps": {
+                "title": "د بصیرا ایپ بیټا نسخه پیل شوه",
+                "description": "موږ په افق پلیټ فارم کې ویاړو چې د بصیرا ایپ بیټا نسخه په لاره اچوو. همدا اوس د ژبې ډوبیدو تجربې څخه خوند واخلئ."
+            },
+            "pt": {
+                "title": "Lançamento da Versão Beta do Aplicativo Basira",
+                "description": "Temos orgulho na Ufug de lançar a versão beta do aplicativo Basira. Aproveite a experiência de imersão linguística agora."
+            },
+            "ru": {
+                "title": "Запуск бета-версии приложения Basira",
+                "description": "Мы на платформе Ufug с гордостью запускаем бета-версию приложения Basira. Наслаждайтесь языковым погружением прямо сейчас."
+            },
+            "sw": {
+                "title": "Uzinduzi wa Toleo la Beta la Programu ya Basira",
+                "description": "Tunajivunia hapa Ufug kuzindua toleo la beta la programu ya Basira. Furahia uzoefu wa kuzama katika lugha sasa."
+            },
+            "tr": {
+                "title": "Basira Uygulamasının Beta Sürümünün Lansmanı",
+                "description": "Ufug platformunda Basira uygulamasının beta sürümünü başlatmaktan gurur duyuyoruz. Dil daldırma deneyiminin tadını şimdi çıkarın."
+            },
+            "ur": {
+                "title": "بصیرہ ایپ کے بیٹا ورژن کا اجراء",
+                "description": "ہمیں افق پلیٹ فارم پر بصیرہ ایپ کا بیٹا ورژن لانچ کرنے پر فخر ہے۔ ابھی زبان میں غوطہ زن ہونے کے تجربے سے لطف اٹھائیں۔"
+            },
+            "zh": {
+                "title": "Basira 应用程序测试版发布",
+                "description": "我们很荣幸在 Ufug 平台推出 Basira 应用程序的测试版。现在就来享受语言沉浸式体验吧。"
+            }
         },
         {
             "id": 2,
-            "title": "تطبيق المؤذن العالمي قريباً على ويندوز",
-            "description": "نعمل بشغف لتطوير تطبيق المؤذن العالمي، وهو أداة سطح مكتب مجانية ومفتوحة المصدر لتبقيك على اتصال بأوقات الصلاة.",
             "image": "muazzin.png",
             "link": "",
-            "date": "2026-09-18"
+            "date": "2026-09-18",
+            "ar": {
+                "title": "تطبيق المؤذن العالمي قريباً على ويندوز",
+                "description": "نعمل بشغف لتطوير تطبيق المؤذن العالمي، وهو أداة سطح مكتب مجانية ومفتوحة المصدر لتبقيك على اتصال بأوقات الصلاة."
+            },
+            "bn": {
+                "title": "গ্লোবাল মুয়াজ্জিন অ্যাপ শীঘ্রই উইন্ডোজে আসছে",
+                "description": "আমরা আবেগের সাথে গ্লোবাল মুয়াজ্জিন অ্যাপ তৈরি করছি, যা আপনাকে প্রার্থনার সময়ের সাথে যুক্ত রাখতে একটি বিনামূল্যের, ওপেন সোর্স ডেস্কটপ টুল।"
+            },
+            "en": {
+                "title": "Global Muazzin App Coming Soon to Windows",
+                "description": "We are passionately developing the Global Muazzin App, a free, open-source desktop tool to keep you connected with prayer times."
+            },
+            "es": {
+                "title": "La aplicación Global Muazzin llegará pronto a Windows",
+                "description": "Estamos desarrollando apasionadamente la aplicación Global Muazzin, una herramienta de escritorio gratuita y de código abierto para mantenerte conectado con los tiempos de oración."
+            },
+            "fa": {
+                "title": "اپلیکیشن موذن جهانی به زودی در ویندوز",
+                "description": "ما با اشتیاق در حال توسعه اپلیکیشن موذن جهانی هستیم، یک ابزار دسکتاپ رایگان و متن‌باز تا شما را با اوقات شرعی در ارتباط نگه دارد."
+            },
+            "fr": {
+                "title": "L'application Global Muazzin arrive bientôt sur Windows",
+                "description": "Nous développons avec passion l'application Global Muazzin, un outil de bureau gratuit et open-source pour vous garder connecté aux heures de prière."
+            },
+            "ha": {
+                "title": "Manhajar Global Muazzin na Zuwa Nan Bada Jimawa ba a Windows",
+                "description": "Muna haɓaka manhajar Global Muazzin da gaske, kayan aikin tebur kyauta, kuma mai buɗe ido don sa ku kasance da haɗin kai da lokutan sallah."
+            },
+            "hi": {
+                "title": "ग्लोबल मुअज्जिन ऐप जल्द ही विंडोज पर आ रहा है",
+                "description": "हम ग्लोबल मुअज्जिन ऐप को जुनून के साथ विकसित कर रहे हैं, जो आपको प्रार्थना के समय से जोड़े रखने के लिए एक मुफ्त, ओपन-सोर्स डेस्कटॉप टूल है।"
+            },
+            "id": {
+                "title": "Aplikasi Global Muazzin Segera Hadir di Windows",
+                "description": "Kami dengan penuh semangat mengembangkan Aplikasi Global Muazzin, alat desktop gratis dan open-source untuk membuat Anda tetap terhubung dengan waktu shalat."
+            },
+            "it": {
+                "title": "L'app Global Muazzin in arrivo su Windows",
+                "description": "Stiamo sviluppando con passione l'app Global Muazzin, uno strumento desktop gratuito e open source per tenerti in contatto con gli orari di preghiera."
+            },
+            "ps": {
+                "title": "ګلوبل مؤذن ایپ ډیر ژر وینډوز ته راځي",
+                "description": "موږ په لیوالتیا سره د ګلوبل مؤذن ایپ رامینځته کوو ، د لمانځه وختونو سره ستاسو وصل ساتلو لپاره وړیا ، خلاصې سرچینې ډیسټاپ وسیله."
+            },
+            "pt": {
+                "title": "Aplicativo Global Muazzin Chegando em Breve ao Windows",
+                "description": "Estamos desenvolvendo apaixonadamente o Aplicativo Global Muazzin, uma ferramenta de desktop gratuita e de código aberto para mantê-lo conectado com os horários de oração."
+            },
+            "ru": {
+                "title": "Приложение Global Muazzin скоро появится на Windows",
+                "description": "Мы с энтузиазмом разрабатываем приложение Global Muazzin — бесплатный настольный инструмент с открытым исходным кодом, который поможет вам оставаться на связи с временем молитв."
+            },
+            "sw": {
+                "title": "Programu ya Global Muazzin Inakuja Hivi Karibuni kwenye Windows",
+                "description": "Tunatengeneza kwa shauku Programu ya Global Muazzin, zana ya kompyuta ya mezani ya bure na huria ili kukuweka karibu na nyakati za maombi."
+            },
+            "tr": {
+                "title": "Global Muazzin Uygulaması Yakında Windows'ta",
+                "description": "Namaz vakitleriyle bağlantıda kalmanızı sağlayacak ücretsiz, açık kaynaklı bir masaüstü aracı olan Global Muazzin Uygulamasını tutkuyla geliştiriyoruz."
+            },
+            "ur": {
+                "title": "گلوبل مؤذن ایپ جلد ونڈوز پر آ رہی ہے",
+                "description": "ہم پرجوش طریقے سے گلوبل مؤذن ایپ تیار کر رہے ہیں، جو آپ کو نماز کے اوقات سے جڑے رکھنے کے لیے ایک مفت اور اوپن سورس ڈیسک ٹاپ ٹول ہے۔"
+            },
+            "zh": {
+                "title": "全球 Muazzin 应用程序即将登陆 Windows",
+                "description": "我们正满怀热情地开发全球 Muazzin 应用程序，这是一款免费的开源桌面工具，可让您随时了解祈祷时间。"
+            }
         },
         {
             "id": 3,
-            "title": "تحديثات جديدة في تقنيات أفق",
-            "description": "انضم إلى قناتنا على تليجرام لمعرفة آخر الأخبار التقنية والكواليس الخاصة بتطوير برمجياتنا القادمة.",
             "image": "default-news.png",
-            "link": "https://t.me",
-            "date": "2026-09-15"
+            "link": "#",
+            "date": "2026-09-15",
+            "ar": {
+                "title": "تحديثات جديدة في تقنيات أفق",
+                "description": "انضم إلى قناتنا على تليجرام لمعرفة آخر الأخبار التقنية والكواليس الخاصة بتطوير برمجياتنا القادمة."
+            },
+            "bn": {
+                "title": "উফুগ প্রযুক্তিতে নতুন আপডেট",
+                "description": "আমাদের আসন্ন সফ্টওয়্যার ডেভেলপমেন্টের সর্বশেষ প্রযুক্তিগত খবর এবং পর্দার পেছনের দৃশ্যের জন্য আমাদের টেলিগ্রাম চ্যানেলে যোগ দিন।"
+            },
+            "en": {
+                "title": "New Updates in Ufug Technologies",
+                "description": "Join our Telegram channel for the latest technical news and behind-the-scenes of our upcoming software development."
+            },
+            "es": {
+                "title": "Nuevas actualizaciones en tecnologías Ufug",
+                "description": "Únete a nuestro canal de Telegram para conocer las últimas noticias técnicas y el detrás de escena del desarrollo de nuestro próximo software."
+            },
+            "fa": {
+                "title": "به‌روزرسانی‌های جدید در فناوری‌های افق",
+                "description": "برای اطلاع از آخرین اخبار فنی و پشت صحنه توسعه نرم‌افزارهای آینده ما، به کانال تلگرام ما بپیوندید."
+            },
+            "fr": {
+                "title": "Nouvelles mises à jour des technologies Ufug",
+                "description": "Rejoignez notre chaîne Telegram pour connaître les dernières actualités techniques et les coulisses de notre prochain développement logiciel."
+            },
+            "ha": {
+                "title": "Sabbin Sabuntawa a Fasahar Ufug",
+                "description": "Kasance tare da tasharmu ta Telegram don samun sabbin labaran fasaha da kuma bayanan fage na haɓaka manhajar mu mai zuwa."
+            },
+            "hi": {
+                "title": "उफुग टेक्नोलॉजीज में नए अपडेट",
+                "description": "नवीनतम तकनीकी समाचार और हमारे आगामी सॉफ्टवेयर विकास के पर्दे के पीछे की जानकारी के लिए हमारे टेलीग्राम चैनल से जुड़ें।"
+            },
+            "id": {
+                "title": "Pembaruan Baru di Ufug Technologies",
+                "description": "Bergabunglah dengan saluran Telegram kami untuk berita teknis terbaru dan di balik layar pengembangan perangkat lunak kami yang akan datang."
+            },
+            "it": {
+                "title": "Nuovi aggiornamenti nelle tecnologie Ufug",
+                "description": "Unisciti al nostro canale Telegram per le ultime notizie tecniche e i dietro le quinte del nostro imminente sviluppo software."
+            },
+            "ps": {
+                "title": "په افق ټیکنالوژۍ کې نوي تازه معلومات",
+                "description": "د وروستي تخنیکي خبرونو او زموږ د راتلونکي سافټویر پرمختګ شاته پردې لپاره زموږ د ټیلیګرام چینل سره یوځای شئ."
+            },
+            "pt": {
+                "title": "Novas Atualizações nas Tecnologias Ufug",
+                "description": "Junte-se ao nosso canal do Telegram para obter as últimas notícias técnicas e os bastidores do desenvolvimento do nosso próximo software."
+            },
+            "ru": {
+                "title": "Новые обновления в технологиях Ufug",
+                "description": "Присоединяйтесь к нашему каналу в Telegram, чтобы узнавать последние технические новости и закулисье разработки нашего будущего программного обеспечения."
+            },
+            "sw": {
+                "title": "Masasisho Mapya katika Teknolojia za Ufug",
+                "description": "Jiunge na chaneli yetu ya Telegram kwa habari za hivi punde za kiufundi na mambo ya nyuma ya pazia ya utengenezaji wetu ujao wa programu."
+            },
+            "tr": {
+                "title": "Ufug Teknolojilerinde Yeni Güncellemeler",
+                "description": "En son teknik haberler ve yaklaşan yazılım geliştirmemizin perde arkası için Telegram kanalımıza katılın."
+            },
+            "ur": {
+                "title": "افق ٹیکنالوجیز میں نئی اپ ڈیٹس",
+                "description": "تازہ ترین تکنیکی خبروں اور ہمارے آنے والے سافٹ ویئر ڈیولپمنٹ کے پردے کے پیچھے کے مناظر کے لیے ہمارے ٹیلی گرام چینل میں شامل ہوں۔"
+            },
+            "zh": {
+                "title": "Ufug 技术的最新动态",
+                "description": "加入我们的 Telegram 频道，了解最新的技术新闻以及我们即将推出的软件开发的幕后花絮。"
+            }
         }
     ]
 }

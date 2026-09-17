@@ -1,4 +1,25 @@
-// دالة إظهار وإخفاء النافذة المنبثقة
+// 1. تحديد لغة الصفحة الحالية (يتم قراءتها من وسم html في صفحة index.html)
+const currentLang = document.documentElement.lang || 'ar';
+
+// 2. دالة استخراج البيانات باللغة المناسبة مع حماية التوافقية الرجعية
+function getLocalizedData(item) {
+    // إذا كان العنصر يحتوي على مفتاح اللغة الحالي (مثلاً ar أو en)
+    if (item[currentLang] && typeof item[currentLang] === 'object') {
+        return item[currentLang];
+    }
+    // العودة للغة العربية كخيار افتراضي لحماية الموقع من الفراغ
+    if (item['ar'] && typeof item['ar'] === 'object') {
+        return item['ar'];
+    }
+    // العودة للغة الإنجليزية إن لم توجد العربية
+    if (item['en'] && typeof item['en'] === 'object') {
+        return item['en'];
+    }
+    // التوافقية الرجعية: إذا كان الملف بالنظام القديم (بدون مفاتيح لغات)، أرجع العنصر كما هو
+    return item; 
+}
+
+// 3. دالة إظهار وإخفاء النافذة المنبثقة (Modal)
 function toggleModal(modalID) {
     const modal = document.getElementById(modalID);
     const body = document.body;
@@ -17,7 +38,7 @@ function toggleModal(modalID) {
     }
 }
 
-// دالة جلب البيانات الأساسية
+// 4. دالة جلب البيانات الأساسية من الملفين المنفصلين
 async function fetchAllData() {
     const projectsContainer = document.getElementById('projects-container');
     const projectsLoading = document.getElementById('projects-loading');
@@ -25,9 +46,10 @@ async function fetchAllData() {
     const newsContainer = document.getElementById('news-container');
     const newsLoading = document.getElementById('news-loading');
     
+    // لكسر الكاش وضمان جلب أحدث بيانات
     const cacheBuster = new Date().getTime();
 
-    // 1. جلب المشاريع
+    // أولاً: جلب المشاريع
     try {
         const projectsResponse = await fetch(`https://ufug.org/projects.json?nocache=${cacheBuster}`);
         projectsLoading.style.display = 'none';
@@ -48,7 +70,7 @@ async function fetchAllData() {
         console.error("Projects Fetch Error:", error);
     }
 
-    // 2. جلب الأخبار
+    // ثانياً: جلب الأخبار
     try {
         const newsResponse = await fetch(`https://ufug.org/news.json?nocache=${cacheBuster}`);
         newsLoading.style.display = 'none';
@@ -70,18 +92,30 @@ async function fetchAllData() {
     }
 }
 
-// دالة رسم المشاريع
+// 5. دالة رسم المشاريع بشكل احترافي
 function renderProjects(projects, container) {
     projects.forEach(proj => {
-        let statusColor = proj.status === 'قريباً' ? 'bg-amber-100 text-amber-700' : 
-                          proj.status === 'نسخة تجريبية' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-800';
+        // قراءة النصوص بناءً على اللغة (من المتغيرات)
+        const locData = getLocalizedData(proj);
         
-        let tagsHtml = '';
-        if(proj.tags && Array.isArray(proj.tags)) {
-            tagsHtml = '<div class="mt-4 flex flex-wrap gap-2">' + proj.tags.map(tag => `<span class="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-1 rounded border border-gray-200">${tag}</span>`).join('') + '</div>';
-        }
+        const pTitle = locData.title || 'بدون عنوان';
+        const pDesc = locData.description || '';
+        const pStatus = locData.status || '';
+        const pTagsArray = locData.tags || [];
 
-        let imgSrc = proj.image ? `Photos/${proj.image}` : 'https://via.placeholder.com/80?text=أفق';
+        // قراءة الثوابت (من الجذر الأساسي للعنصر)
+        const imgSrc = proj.image ? `Photos/${proj.image}` : 'https://via.placeholder.com/80?text=أفق';
+        const pLink = proj.link || '';
+
+        // تلوين الحالة
+        let statusColor = pStatus === 'قريباً' || pStatus.toLowerCase() === 'coming soon' ? 'bg-amber-100 text-amber-700' : 
+                          pStatus === 'نسخة تجريبية' || pStatus.toLowerCase() === 'beta' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-800';
+        
+        // بناء الكلمات المفتاحية
+        let tagsHtml = '';
+        if(Array.isArray(pTagsArray) && pTagsArray.length > 0) {
+            tagsHtml = '<div class="mt-4 flex flex-wrap gap-2">' + pTagsArray.map(tag => `<span class="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-1 rounded border border-gray-200">${tag}</span>`).join('') + '</div>';
+        }
 
         container.innerHTML += `
             <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition duration-300 flex flex-col justify-between h-full group relative overflow-hidden">
@@ -89,39 +123,49 @@ function renderProjects(projects, container) {
                 <div>
                     <div class="flex items-start justify-between mb-4">
                         <div class="flex items-center gap-3 w-full">
-                            <img src="${imgSrc}" alt="${proj.title}" onerror="this.src='https://via.placeholder.com/80?text=أفق'" class="w-12 h-12 rounded-lg object-cover shadow-sm border border-gray-100 flex-shrink-0">
+                            <img src="${imgSrc}" alt="${pTitle}" onerror="this.src='https://via.placeholder.com/80?text=أفق'" class="w-12 h-12 rounded-lg object-cover shadow-sm border border-gray-100 flex-shrink-0">
                             <div class="flex-grow">
-                                <h4 class="text-lg font-bold text-gray-800 mb-1 leading-tight group-hover:text-emerald-600 transition">${proj.title}</h4>
-                                <span class="inline-block text-[10px] font-bold ${statusColor} px-2 py-0.5 rounded-full">${proj.status}</span>
+                                <h4 class="text-lg font-bold text-gray-800 mb-1 leading-tight group-hover:text-emerald-600 transition">${pTitle}</h4>
+                                ${pStatus ? `<span class="inline-block text-[10px] font-bold ${statusColor} px-2 py-0.5 rounded-full">${pStatus}</span>` : ''}
                             </div>
                         </div>
                     </div>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-4">${proj.description}</p>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">${pDesc}</p>
                 </div>
                 <div>
                     ${tagsHtml}
-                    ${proj.link ? `<a href="${proj.link}" target="_blank" class="mt-5 block text-center bg-gray-50 hover:bg-emerald-600 hover:text-white text-gray-700 font-bold py-2 rounded-lg transition border border-gray-200 hover:border-transparent text-sm">عرض المشروع &larr;</a>` : ''}
+                    ${pLink ? `<a href="${pLink}" target="_blank" class="mt-5 block text-center bg-gray-50 hover:bg-emerald-600 hover:text-white text-gray-700 font-bold py-2 rounded-lg transition border border-gray-200 hover:border-transparent text-sm">عرض التفاصيل &larr;</a>` : ''}
                 </div>
             </div>
         `;
     });
 }
 
-// دالة رسم الأخبار (تصميم الشريط الزمني)
+// 6. دالة رسم الأخبار بخط زمني
 function renderNews(news, container) {
     news.forEach((item) => {
-        let imgSrcHtml = item.image ? `<img src="Photos/${item.image}" onerror="this.style.display='none'" class="mt-4 rounded-lg border border-gray-100 max-h-48 object-cover shadow-sm">` : '';
-        let linkHtml = item.link ? `<a href="${item.link}" target="_blank" class="text-indigo-600 font-bold text-sm hover:underline mt-3 inline-block">التفاصيل &larr;</a>` : '';
+        // قراءة النصوص بناءً على اللغة
+        const locData = getLocalizedData(item);
+        
+        const nTitle = locData.title || 'بدون عنوان';
+        const nDesc = locData.description || '';
+        
+        // قراءة الثوابت
+        const nDate = item.date || '';
+        const nImage = item.image || '';
+        const nLink = item.link || '';
+
+        let imgSrcHtml = nImage ? `<img src="Photos/${nImage}" onerror="this.style.display='none'" class="mt-4 rounded-lg border border-gray-100 max-h-48 object-cover shadow-sm w-full">` : '';
+        let linkHtml = nLink && nLink !== "#" ? `<a href="${nLink}" target="_blank" class="text-indigo-600 font-bold text-sm hover:underline mt-3 inline-block">التفاصيل &larr;</a>` : '';
         
         container.innerHTML += `
             <div class="relative pl-6 sm:pl-0 sm:pr-8 group">
-                <!-- النقطة على الخط الزمني -->
                 <div class="absolute top-1.5 -right-[5px] w-2.5 h-2.5 bg-gray-300 rounded-full border-2 border-white group-hover:bg-indigo-500 group-hover:scale-150 transition-all z-10"></div>
                 
                 <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 hover:border-indigo-100 hover:shadow-sm transition">
-                    <span class="text-xs font-bold text-indigo-500 mb-2 block">${item.date}</span>
-                    <h4 class="text-lg font-bold text-gray-800 mb-2">${item.title}</h4>
-                    <p class="text-gray-600 text-sm leading-relaxed">${item.description}</p>
+                    ${nDate ? `<span class="text-xs font-bold text-indigo-500 mb-2 block">${nDate}</span>` : ''}
+                    <h4 class="text-lg font-bold text-gray-800 mb-2">${nTitle}</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">${nDesc}</p>
                     ${imgSrcHtml}
                     ${linkHtml}
                 </div>
@@ -130,5 +174,5 @@ function renderNews(news, container) {
     });
 }
 
-// تشغيل دالة الجلب عند تحميل الصفحة
+// 7. تشغيل الجلب فور تحميل الصفحة
 window.onload = fetchAllData;

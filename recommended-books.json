@@ -1,0 +1,22 @@
+{
+  "books": [
+    {
+      "id": "rec-1",
+      "title": "فلسفة الكود النظيف",
+      "description": "دليل شامل لكتابة شفرات برمجية قابلة للقراءة والصيانة، مع أمثلة عملية للمطورين.",
+      "cover": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      "category": "برمجة",
+      "rating": 5,
+      "link": "https://ufug.org/clean-code"
+    },
+    {
+      "id": "rec-2",
+      "title": "تاريخ الأندلس المصور",
+      "description": "رحلة بصرية ومعرفية عبر تاريخ الحضارة الإسلامية في الأندلس من الفتح إلى السقوط.",
+      "cover": "https://images.unsplash.com/photo-1541604193435-22287d32c2c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      "category": "تاريخ",
+      "rating": 4,
+      "link": "https://ufug.org/andalus-history"
+    }
+  ]
+}

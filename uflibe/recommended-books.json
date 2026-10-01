@@ -1,0 +1,42 @@
+{
+  "ar": [
+    {
+      "id": "rec-ar-1",
+      "title": "فلسفة الكود النظيف",
+      "description": "دليل شامل لكتابة شفرات برمجية قابلة للقراءة والصيانة، مع أمثلة عملية للمطورين.",
+      "cover": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      "category": "برمجة",
+      "rating": 5,
+      "link": "https://ufug.org/clean-code"
+    },
+    {
+      "id": "rec-ar-2",
+      "title": "تاريخ الأندلس المصور",
+      "description": "رحلة بصرية ومعرفية عبر تاريخ الحضارة الإسلامية في الأندلس من الفتح إلى السقوط.",
+      "cover": "",
+      "category": "تاريخ",
+      "rating": 4,
+      "link": "https://ufug.org/andalus-history"
+    }
+  ],
+  "en": [
+    {
+      "id": "rec-en-1",
+      "title": "The Pragmatic Programmer",
+      "description": "Your journey to mastery in software development and clean architecture.",
+      "cover": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      "category": "Programming",
+      "rating": 5,
+      "link": "https://ufug.org/pragmatic-programmer"
+    },
+    {
+      "id": "rec-en-2",
+      "title": "The Silent History",
+      "description": "A deep dive into the forgotten eras of human civilization.",
+      "cover": "",
+      "category": "History",
+      "rating": 4,
+      "link": "https://ufug.org/silent-history"
+    }
+  ]
+}

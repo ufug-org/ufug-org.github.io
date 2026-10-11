@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ufBuild | حلول برمجية احترافية من أفق</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; overflow-x: hidden;}
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to left, #059669, #10b981, #34d399);
+        }
+        .hero-pattern {
+            background-color: #f8fafc;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .float-animation { animation: float 6s ease-in-out infinite; }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased selection:bg-emerald-200">
+
+    <!-- شريط التنقل -->
+    <nav class="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100 sticky top-0 z-50">
+        <div class="container mx-auto px-4 md:px-8 py-4 flex justify-between items-center max-w-6xl">
+            <a href="https://ufug.org" class="flex items-center gap-3 group hover:opacity-80 transition">
+                <div class="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:bg-emerald-700 transition">أ</div>
+                <div>
+                    <h1 class="text-xl font-extrabold text-gray-900 leading-none tracking-tight">أُفُق</h1>
+                    <span class="text-xs font-bold text-emerald-600 tracking-wider">ufBuild</span>
+                </div>
+            </a>
+            <div class="flex gap-4">
+                <a href="#services" class="hidden md:inline-flex items-center text-gray-600 hover:text-emerald-600 font-bold transition">خدماتنا</a>
+                <a href="#portfolio" class="hidden md:inline-flex items-center text-gray-600 hover:text-emerald-600 font-bold transition">أعمالنا</a>
+                <a href="#contact" class="bg-gray-900 text-white hover:bg-emerald-600 px-6 py-2.5 rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2">
+                    <i class="fa-solid fa-rocket"></i> ابدأ مشروعك
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- قسم الهيرو (البداية) -->
+    <header class="relative pt-20 pb-24 md:pt-32 md:pb-32 overflow-hidden hero-pattern">
+        <div class="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-emerald-100 rounded-full blur-3xl opacity-50"></div>
+        <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-indigo-100 rounded-full blur-3xl opacity-50"></div>
+        
+        <div class="container mx-auto px-4 md:px-8 max-w-6xl relative z-10 flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-3/5 text-center md:text-right">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 font-bold text-sm mb-6 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    نحول الفكرة إلى تطبيق حقيقي
+                </div>
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 leading-tight mb-6">
+                    بناء تطبيقات <br />
+                    <span class="gradient-text">عصرية وسريعة</span>
+                </h2>
+                <p class="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto md:mx-0">
+                    في <strong class="text-gray-900">ufBuild</strong>، نقدم حلولاً برمجية متكاملة للمعلمين، رواد الأعمال، والمشاريع الهادفة. نصمم ونبرمج تطبيقات الأندرويد والويب بأحدث التقنيات لضمان أداء فائق وتجربة مستخدم لا تُنسى.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#contact" class="bg-emerald-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-emerald-700 transition shadow-lg shadow-emerald-200 flex items-center justify-center gap-2">
+                        طلب عرض سعر <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                    <a href="#portfolio" class="bg-white text-gray-800 border-2 border-gray-200 px-8 py-4 rounded-xl font-bold text-lg hover:border-emerald-500 hover:text-emerald-600 transition flex items-center justify-center gap-2">
+                        استكشف أعمالنا <i class="fa-solid fa-layer-group"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-2/5 relative float-animation">
+                <div class="bg-white p-4 rounded-3xl shadow-2xl border border-gray-100 relative z-10 transform rotate-[-2deg]">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="تطوير التطبيقات" class="rounded-2xl w-full h-auto">
+                    <!-- بطاقة عائمة -->
+                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border border-gray-100 flex items-center gap-4 transform rotate-[4deg]">
+                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl"><i class="fa-brands fa-react"></i></div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-bold">تقنيات حديثة</p>
+                            <p class="text-sm font-black text-gray-800">React & Capacitor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- قسم الخدمات -->
+    <section id="services" class="py-20 bg-white border-y border-gray-100">
+        <div class="container mx-auto px-4 md:px-8 max-w-6xl">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">خدمات التطوير البرمجي</h3>
+                <p class="text-gray-600 text-lg">نقدم حزمة متكاملة من الخدمات التقنية لتحويل مشروعك إلى واقع ملموس باحترافية عالية.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- خدمة 1 -->
+                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-100 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 group">
+                    <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">تطبيقات الهواتف الذكية</h4>
+                    <p class="text-gray-600 leading-relaxed mb-4">برمجة تطبيقات Android سريعة وعالية الأداء باستخدام أحدث التقنيات الهجينة (Capacitor) مع ربط متكامل بقواعد البيانات.</p>
+                    <ul class="text-sm text-gray-500 space-y-2 font-bold">
+                        <li><i class="fa-solid fa-check text-emerald-500 ml-1"></i> إشعارات فورية (OneSignal)</li>
+                        <li><i class="fa-solid fa-check text-emerald-500 ml-1"></i> رفع على متجر جوجل بلاي</li>
+                    </ul>
+                </div>
+                
+                <!-- خدمة 2 -->
+                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-100 hover:border-blue-300 hover:shadow-lg transition-all duration-300 group">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">منصات تعليمية وإدارية</h4>
+                    <p class="text-gray-600 leading-relaxed mb-4">تصميم منصات تعليمية متكاملة للمعلمين والمدارس، مع لوحات تحكم ديناميكية (تعتمد على Google Sheets كقاعدة بيانات مرنة أو قواعد مخصصة).</p>
+                    <ul class="text-sm text-gray-500 space-y-2 font-bold">
+                        <li><i class="fa-solid fa-check text-blue-500 ml-1"></i> إدارة الدروس والمحتوى</li>
+                        <li><i class="fa-solid fa-check text-blue-500 ml-1"></i> تحديث فوري للبيانات</li>
+                    </ul>
+                </div>
+
+                <!-- خدمة 3 -->
+                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-100 hover:border-indigo-300 hover:shadow-lg transition-all duration-300 group">
+                    <div class="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">صفحات الهبوط (Landing Pages)</h4>
+                    <p class="text-gray-600 leading-relaxed mb-4">تصميم وبرمجة واجهات ويب احترافية وجذابة لتسويق تطبيقاتك أو خدماتك بطريقة تزيد من معدل التحويل (Conversion Rate).</p>
+                    <ul class="text-sm text-gray-500 space-y-2 font-bold">
+                        <li><i class="fa-solid fa-check text-indigo-500 ml-1"></i> متجاوبة مع جميع الشاشات</li>
+                        <li><i class="fa-solid fa-check text-indigo-500 ml-1"></i> سريعة التحميل (SEO Friendly)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم أعمالنا (نموذج الأستاذ معتصم) -->
+    <section id="portfolio" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4 md:px-8 max-w-6xl">
+            <div class="flex items-center gap-3 mb-12">
+                <div class="w-2 h-10 bg-emerald-500 rounded-full"></div>
+                <h3 class="text-3xl font-extrabold text-gray-900">أعمال نفخر بها</h3>
+            </div>
+            
+            <!-- كرت مشروع منصة الأستاذ معتصم -->
+            <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 flex flex-col lg:flex-row group hover:shadow-xl transition-shadow duration-300">
+                <div class="lg:w-1/2 bg-gradient-to-br from-blue-700 to-indigo-900 p-10 relative overflow-hidden flex items-center justify-center min-h-[350px]">
+                    <!-- الزخرفة الخلفية -->
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-y-10 translate-x-10 blur-2xl"></div>
+                    <!-- الصور التخيلية للتطبيق -->
+                    <div class="relative z-10 flex gap-4 transform group-hover:scale-105 transition-transform duration-500">
+                        <!-- هنا يمكنك وضع لقطات شاشة حقيقية للتطبيق -->
+                        <div class="w-40 h-80 bg-gray-900 rounded-[2rem] border-4 border-gray-800 shadow-2xl overflow-hidden relative">
+                             <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-16 h-4 bg-gray-800 rounded-b-xl z-20"></div>
+                             <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="شاشة التطبيق" class="w-full h-full object-cover opacity-80">
+                             <div class="absolute inset-0 flex items-center justify-center">
+                                 <span class="text-white font-bold text-xl drop-shadow-md">منصة الفيزياء</span>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                    <div class="inline-block bg-blue-100 text-blue-700 font-bold text-xs px-3 py-1 rounded-full mb-4 self-start">تطبيق أندرويد + منصة تعليمية</div>
+                    <h4 class="text-3xl font-black text-gray-900 mb-4">منصة الأستاذ معتصم</h4>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                        تطبيق تعليمي متكامل تم بناؤه باستخدام <strong>React و Capacitor</strong>. يتميز بكونه ديناميكياً بالكامل حيث يتصل بقاعدة بيانات <strong>Google Sheets</strong> ليتمكن الأستاذ من تحديث الدروس، الإعلانات، وملفات الـ PDF فورياً وبكل سهولة.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-8">
+                        <span class="bg-gray-100 text-gray-600 text-sm font-bold px-3 py-1.5 rounded border border-gray-200"><i class="fa-brands fa-react text-blue-500 ml-1"></i> React</span>
+                        <span class="bg-gray-100 text-gray-600 text-sm font-bold px-3 py-1.5 rounded border border-gray-200"><i class="fa-solid fa-mobile text-gray-800 ml-1"></i> Capacitor</span>
+                        <span class="bg-gray-100 text-gray-600 text-sm font-bold px-3 py-1.5 rounded border border-gray-200"><i class="fa-solid fa-bell text-amber-500 ml-1"></i> OneSignal</span>
+                        <span class="bg-gray-100 text-gray-600 text-sm font-bold px-3 py-1.5 rounded border border-gray-200"><i class="fa-solid fa-database text-emerald-500 ml-1"></i> Sheets API</span>
+                    </div>
+                    <!-- رابط لصفحة الهبوط الخاصة بالمعلم إذا كانت جاهزة -->
+                    <a href="#" class="inline-flex items-center gap-2 text-blue-600 font-bold hover:text-blue-800 transition">
+                        عرض تفاصيل المشروع <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الدعوة لاتخاذ إجراء (Contact) -->
+    <section id="contact" class="py-20 bg-emerald-600 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(white 2px, transparent 2px); background-size: 30px 30px;"></div>
+        <div class="container mx-auto px-4 max-w-4xl text-center relative z-10">
+            <h2 class="text-3xl md:text-5xl font-black text-white mb-6">هل لديك فكرة مشروع تقني؟</h2>
+            <p class="text-emerald-100 text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
+                سواء كنت معلماً تبحث عن منصة لطلابك، أو صاحب مشروع ريادي يحتاج إلى تطبيق احترافي، نحن هنا لنبني لك الأداة التقنية التي تناسبك.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <!-- استبدل برقم هاتفك أو رابط التواصل -->
+                <a href="https://wa.me/962776466152" target="_blank" class="bg-white text-emerald-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition shadow-lg flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-2xl text-green-500"></i> تواصل معنا عبر واتساب
+                </a>
+                <a href="mailto:contact@ufug.org" class="bg-emerald-800 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-emerald-900 transition shadow-lg flex items-center justify-center gap-2 border border-emerald-500">
+                    <i class="fa-solid fa-envelope"></i> راسلنا عبر البريد
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- التذييل (Footer) -->
+    <footer class="bg-gray-900 text-gray-300 py-8 border-t-4 border-emerald-600">
+        <div class="container mx-auto px-4 md:px-8 max-w-6xl flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-emerald-600 rounded flex items-center justify-center text-white font-bold">أ</div>
+                <h4 class="text-xl font-bold text-white">منصة أُفُق</h4>
+            </div>
+            <div class="text-center text-sm text-gray-500">
+                &copy; 2026 ufBuild - جميع الحقوق محفوظة لمنصة أُفُق.
+            </div>
+            <div class="flex gap-4">
+                <a href="https://ufug.org" class="text-gray-400 hover:text-emerald-400 transition font-bold text-sm">الموقع الرئيسي</a>
+                <a href="#" class="text-gray-400 hover:text-emerald-400 transition font-bold text-sm">سياسة الخصوصية</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
